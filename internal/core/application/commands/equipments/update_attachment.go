@@ -3,47 +3,45 @@ package equipments
 import (
 	"context"
 	"fmt"
+	"strings"
 
-	"github.com/cheezecakee/logr"
-
+	"github.com/cheezecakee/fitrkr-atlas/internal/core/domain/equipment"
 	"github.com/cheezecakee/fitrkr-atlas/internal/core/ports"
 )
 
 type UpdateAttachmentCommand struct {
-	ID            int    `json:"id"`
-	EquipmentID   int    `json:"equipment_id"`
-	Name          string `json:"name"`
-	Write         ports.EquipmentAttachmentWrite
-	Read          ports.EquipmentAttachmentRead
-	ReadEquipment ports.EquipmentRead
+	ID    int    `json:"id"`
+	Name  string `json:"name"`
+	Type  string `json:"type"`
+	Write ports.Write
+	Read  ports.Read
 }
 
 type UpdateAttachmentResp struct{}
 
 func (cmd *UpdateAttachmentCommand) Handle(ctx context.Context) (any, error) {
-	existing, err := cmd.Read.GetByID(ctx, cmd.ID)
+	existing, err := cmd.Read.Attachment.GetByID(ctx, cmd.ID)
 	if err != nil {
-		logr.Get().Errorf("failed to get attachment: %v", err)
 		return UpdateAttachmentResp{}, fmt.Errorf("failed to get attachment: %w", err)
 	}
 
 	if cmd.Name != "" {
-		existing.Name = cmd.Name
+		name := strings.TrimSpace(strings.ToLower(cmd.Name))
+		existing.Name = name
 	}
-	if cmd.EquipmentID > 0 {
-		_, err := cmd.ReadEquipment.GetByID(ctx, cmd.EquipmentID)
+
+	if cmd.Type != "" {
+		attachmentType, err := equipment.NewAttachmentType(cmd.Type)
 		if err != nil {
-			logr.Get().Errorf("failed to validate equipment: %v", err)
-			return UpdateAttachmentResp{}, fmt.Errorf("failed to validate equipment: %w", err)
+			return nil, fmt.Errorf("failed to create attachment type: %w", err)
 		}
-		existing.EquipmentID = cmd.EquipmentID
+		existing.Type = attachmentType
 	}
 
 	existing.Touch()
 
-	err = cmd.Write.Update(ctx, *existing)
+	err = cmd.Write.Attachment.Update(ctx, *existing)
 	if err != nil {
-		logr.Get().Errorf("failed to update attachment: %v", err)
 		return UpdateAttachmentResp{}, fmt.Errorf("failed to update attachment: %w", err)
 	}
 
