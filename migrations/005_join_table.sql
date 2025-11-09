@@ -1,4 +1,5 @@
 -- +goose Up
+CREATE TYPE activation_level_type AS ENUM ('primary', 'secondary', 'tertiary');
 
 -- Exercises
 CREATE TABLE exercise_alias (
@@ -15,7 +16,7 @@ CREATE TABLE exercise_muscle (
     id SERIAL PRIMARY KEY,
     exercise_id INT NOT NULL REFERENCES exercise(id) ON DELETE CASCADE,
     muscle_id INT NOT NULL REFERENCES muscle(id) ON DELETE RESTRICT,
-    activation_level VARCHAR(20) NOT NULL, 
+    activation_level activation_level_type NOT NULL, 
     created_at TIMESTAMP, 
     updated_at TIMESTAMP, 
     UNIQUE(exercise_id, muscle_id)
@@ -89,3 +90,4 @@ DROP TABLE IF EXISTS exercise_category;
 DROP TABLE IF EXISTS exercise_equipment;
 DROP TABLE IF EXISTS exercise_muscle;
 DROP TABLE IF EXISTS exercise_alias;
+DROP TYPE IF EXISTS activation_level_type;
