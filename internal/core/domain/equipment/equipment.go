@@ -13,27 +13,25 @@ var (
 )
 
 type Equipment struct {
-	ID                 *int          `json:"id"`
-	Name               string        `json:"name"`
-	Description        *string       `json:"description"`
-	Type               EquipmentType `json:"type"`
-	AllowedAttachments bool          `json:"allowed_attachments"`
-	CreatedAt          time.Time     `json:"created_at"`
-	UpdatedAt          time.Time     `json:"updated_at"`
+	ID          *int          `json:"id"`
+	Name        string        `json:"name"`
+	Description *string       `json:"description"`
+	Type        EquipmentType `json:"type"`
+	CreatedAt   time.Time     `json:"created_at"`
+	UpdatedAt   time.Time     `json:"updated_at"`
 }
 
-func New(name, description string, equipmentType EquipmentType, allowedAttachments bool) (Equipment, error) {
+func New(name, description string, equipmentType EquipmentType) (Equipment, error) {
 	if name == "" {
 		return Equipment{}, ErrEmptyEquipmentName
 	}
 
 	return Equipment{
-		Name:               strings.TrimSpace(strings.ToLower(name)),
-		Description:        &description,
-		Type:               equipmentType,
-		AllowedAttachments: allowedAttachments,
-		CreatedAt:          time.Now(),
-		UpdatedAt:          time.Now(),
+		Name:        strings.TrimSpace(strings.ToLower(name)),
+		Description: &description,
+		Type:        equipmentType,
+		CreatedAt:   time.Now(),
+		UpdatedAt:   time.Now(),
 	}, nil
 }
 
