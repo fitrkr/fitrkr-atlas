@@ -15,7 +15,7 @@ func NewCategoryType(name string) (CategoryType, error) {
 		return "", ErrEmptyCategory
 	}
 
-	name = strings.ToLower(name)
+	name = strings.TrimSpace(strings.ToLower(name))
 	switch name {
 	case "strength", "cardio", "flexibility":
 		return CategoryType(name), nil

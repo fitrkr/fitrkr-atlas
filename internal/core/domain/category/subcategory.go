@@ -27,7 +27,7 @@ func NewSubcategory(name string, categoryID int) (Subcategory, error) {
 		return Subcategory{}, ErrInvalidCategoryID
 	}
 	return Subcategory{
-		Name:       strings.ToLower(name),
+		Name:       strings.TrimSpace(strings.ToLower(name)),
 		CategoryID: categoryID,
 		CreatedAt:  time.Now(),
 		UpdatedAt:  time.Now(),
