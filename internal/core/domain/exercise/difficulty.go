@@ -8,40 +8,40 @@ import (
 type Difficulty int
 
 const (
-	DifficultyBeginner Difficulty = iota
-	DifficultyIntermediate
-	DifficultyAdvanced
-	DifficultyElite
+	BEGINNER Difficulty = iota + 1
+	INTERMEDIATE
+	ADVANCED
+	ELITE
 )
 
 var ErrInvalidDifficulty = errors.New("invalid difficulty")
 
 func NewDifficulty(difficulty string) (Difficulty, error) {
-	switch strings.ToLower(difficulty) {
+	switch strings.TrimSpace(strings.ToLower(difficulty)) {
 	case "beginner":
-		return DifficultyBeginner, nil
+		return BEGINNER, nil
 	case "intermediate":
-		return DifficultyIntermediate, nil
+		return INTERMEDIATE, nil
 	case "advanced":
-		return DifficultyAdvanced, nil
+		return ADVANCED, nil
 	case "elite":
-		return DifficultyElite, nil
+		return ELITE, nil
 	default:
-		return DifficultyBeginner, ErrInvalidDifficulty
+		return 0, ErrInvalidDifficulty
 	}
 }
 
 func (d Difficulty) ToString() string {
 	switch d {
-	case DifficultyBeginner:
-		return "Beginner"
-	case DifficultyIntermediate:
-		return "Intermediate"
-	case DifficultyAdvanced:
-		return "Advanced"
-	case DifficultyElite:
-		return "Elite"
+	case BEGINNER:
+		return "beginner"
+	case INTERMEDIATE:
+		return "intermediate"
+	case ADVANCED:
+		return "advanced"
+	case ELITE:
+		return "elite"
 	default:
-		return "Unknown"
+		return "unknown"
 	}
 }
