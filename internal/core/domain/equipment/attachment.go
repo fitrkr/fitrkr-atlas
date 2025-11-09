@@ -20,11 +20,14 @@ type Attachment struct {
 	UpdatedAt time.Time
 }
 
-func NewAttachment(name string) (Attachment, error) {
+func NewAttachment(name string, attachmentType AttachmentType) (Attachment, error) {
 	if name == "" {
 		return Attachment{}, ErrEmptyAttachment
 	}
-	return Attachment{Name: strings.TrimSpace(strings.ToLower(name))}, nil
+	return Attachment{
+		Name: strings.TrimSpace(strings.ToLower(name)),
+		Type: attachmentType,
+	}, nil
 }
 
 func (a *Attachment) Touch() {
