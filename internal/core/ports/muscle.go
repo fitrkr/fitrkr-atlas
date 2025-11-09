@@ -13,8 +13,8 @@ var (
 )
 
 type MuscleGroupWrite interface {
-	Add(ctx context.Context, muscle muscle.Group) error
-	Update(ctx context.Context, muscle muscle.Group) error
+	Add(ctx context.Context, muscleGroup muscle.Group) error
+	Update(ctx context.Context, muscleGroup muscle.Group) error
 	Delete(ctx context.Context, id int) error
 }
 
