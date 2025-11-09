@@ -7,26 +7,24 @@ import (
 )
 
 var (
-	ErrEmptyAttachment    = errors.New("empty attachment")
-	ErrInvalidEquipmentID = errors.New("invalid equipment id")
+	ErrEmptyAttachment       = errors.New("empty attachment")
+	ErrInvalidEquipmentID    = errors.New("invalid equipment id")
+	ErrInvalidAttachmentType = errors.New("invalid attachment type")
 )
 
 type Attachment struct {
-	ID          *int
-	EquipmentID int
-	Name        string
-	CreatedAt   time.Time
-	UpdatedAt   time.Time
+	ID        *int
+	Name      string
+	Type      AttachmentType
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }
 
-func NewAttachment(name string, equipmentID int) (Attachment, error) {
+func NewAttachment(name string) (Attachment, error) {
 	if name == "" {
 		return Attachment{}, ErrEmptyAttachment
 	}
-	if equipmentID < 0 {
-		return Attachment{}, ErrInvalidEquipmentID
-	}
-	return Attachment{Name: strings.ToLower(name), EquipmentID: equipmentID}, nil
+	return Attachment{Name: strings.TrimSpace(strings.ToLower(name))}, nil
 }
 
 func (a *Attachment) Touch() {

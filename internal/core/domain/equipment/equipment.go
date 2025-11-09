@@ -7,26 +7,33 @@ import (
 	"time"
 )
 
-var ErrEmptyEquipmentName = errors.New("empty equipment name")
+var (
+	ErrEmptyEquipmentName   = errors.New("empty equipment name")
+	ErrInvalidEquipmentType = errors.New("invalid equipment type")
+)
 
 type Equipment struct {
-	ID          *int      `json:"id"`
-	Name        string    `json:"name"`
-	Description *string   `json:"description"`
-	CreatedAt   time.Time `json:"created_at"`
-	UpdatedAt   time.Time `json:"updated_at"`
+	ID                 *int          `json:"id"`
+	Name               string        `json:"name"`
+	Description        *string       `json:"description"`
+	Type               EquipmentType `json:"type"`
+	AllowedAttachments bool          `json:"allowed_attachments"`
+	CreatedAt          time.Time     `json:"created_at"`
+	UpdatedAt          time.Time     `json:"updated_at"`
 }
 
-func New(name, description string) (Equipment, error) {
+func New(name, description string, equipmentType EquipmentType, allowedAttachments bool) (Equipment, error) {
 	if name == "" {
 		return Equipment{}, ErrEmptyEquipmentName
 	}
 
 	return Equipment{
-		Name:        strings.ToLower(name),
-		Description: &description,
-		CreatedAt:   time.Now(),
-		UpdatedAt:   time.Now(),
+		Name:               strings.TrimSpace(strings.ToLower(name)),
+		Description:        &description,
+		Type:               equipmentType,
+		AllowedAttachments: allowedAttachments,
+		CreatedAt:          time.Now(),
+		UpdatedAt:          time.Now(),
 	}, nil
 }
 
