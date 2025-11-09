@@ -28,7 +28,7 @@ func New(name string, muscleGroupID int) (Muscle, error) {
 		return Muscle{}, ErrInvalidMuscleGroupID
 	}
 	return Muscle{
-		Name:          strings.ToLower(name),
+		Name:          strings.TrimSpace(strings.ToLower(name)),
 		MuscleGroupID: muscleGroupID,
 		CreatedAt:     time.Now(),
 		UpdatedAt:     time.Now(),
