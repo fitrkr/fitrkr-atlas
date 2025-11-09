@@ -5,24 +5,40 @@ import (
 	"time"
 )
 
-var ErrInvalidName = errors.New("empty name")
+var (
+	ErrInvalidName = errors.New("empty name")
+	ErrEmptyURL    = errors.New("empty url")
+	ErrEmptyOrder  = errors.New("empty display order")
+)
 
 type Media struct {
-	URL       string
-	Type      MediaType
-	Order     int
-	IsPrimary bool
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	ID         *int
+	ExerciseID int
+	URL        string    `json:"url"` // TODO add a URL validator
+	Type       MediaType `json:"type"`
+	Order      int       `json:"order"`
+	IsPrimary  bool      `json:"is_primary"`
+	CreatedAt  time.Time `json:"created_at"`
+	UpdatedAt  time.Time `json:"updated_at"`
 }
 
-func NewMedia(url string, mediaType MediaType, order int, isPrimary bool) (Media, error) {
+func NewMedia(exerciseID, order int, url string, mediaType MediaType, isPrimary bool) (Media, error) {
+	if exerciseID < 0 {
+		return Media{}, ErrEmptyExericiseID
+	}
+	if order < 1 {
+		return Media{}, ErrEmptyOrder
+	}
+	if url == "" {
+		return Media{}, ErrEmptyURL
+	}
 	return Media{
-		URL:       url,
-		Type:      mediaType,
-		Order:     order,
-		IsPrimary: isPrimary,
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
+		ExerciseID: exerciseID,
+		URL:        url,
+		Type:       mediaType,
+		Order:      order,
+		IsPrimary:  isPrimary,
+		CreatedAt:  time.Now(),
+		UpdatedAt:  time.Now(),
 	}, nil
 }
