@@ -32,6 +32,6 @@ func (a AttachmentType) ToString() string {
 	case Plate:
 		return "weight"
 	default:
-		return "unknown"
+		return ""
 	}
 }

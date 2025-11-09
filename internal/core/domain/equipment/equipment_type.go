@@ -32,6 +32,6 @@ func (e EquipmentType) ToString() string {
 	case Machine:
 		return "machine"
 	default:
-		return "unknown"
+		return ""
 	}
 }
