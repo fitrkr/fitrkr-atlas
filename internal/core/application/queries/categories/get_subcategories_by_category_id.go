@@ -4,15 +4,13 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/cheezecakee/logr"
-
 	"github.com/cheezecakee/fitrkr-atlas/internal/core/domain/category"
 	"github.com/cheezecakee/fitrkr-atlas/internal/core/ports"
 )
 
 type GetSubcategoriesByCategoryIDQuery struct {
 	CategoryID int `json:"category_id"`
-	Read       ports.SubcategoryRead
+	Read       ports.Read
 }
 
 type GetSubcategoriesByCategoryIDResp struct {
@@ -20,9 +18,8 @@ type GetSubcategoriesByCategoryIDResp struct {
 }
 
 func (qry *GetSubcategoriesByCategoryIDQuery) Handle(ctx context.Context) (any, error) {
-	subcategories, err := qry.Read.GetByCategoryID(ctx, qry.CategoryID)
+	subcategories, err := qry.Read.Category.Subcategory.GetByCategoryID(ctx, qry.CategoryID)
 	if err != nil {
-		logr.Get().Errorf("failed to get subcategories: %v", err)
 		return GetSubcategoriesByCategoryIDResp{}, fmt.Errorf("failed to get subcategories: %w", err)
 	}
 

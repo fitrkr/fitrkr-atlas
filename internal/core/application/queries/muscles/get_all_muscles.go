@@ -4,14 +4,12 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/cheezecakee/logr"
-
 	"github.com/cheezecakee/fitrkr-atlas/internal/core/domain/muscle"
 	"github.com/cheezecakee/fitrkr-atlas/internal/core/ports"
 )
 
 type GetAllMusclesQuery struct {
-	Read ports.MuscleRead
+	Read ports.Read
 }
 
 type GetAllMusclesResp struct {
@@ -19,9 +17,8 @@ type GetAllMusclesResp struct {
 }
 
 func (qry *GetAllMusclesQuery) Handle(ctx context.Context) (any, error) {
-	muscles, err := qry.Read.GetAll(ctx)
+	muscles, err := qry.Read.Muscle.GetAll(ctx)
 	if err != nil {
-		logr.Get().Errorf("failed to get muscles: %v", err)
 		return GetAllMusclesResp{}, fmt.Errorf("failed to get muscles: %w", err)
 	}
 
