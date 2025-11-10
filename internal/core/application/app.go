@@ -4,9 +4,11 @@ package application
 import (
 	"github.com/cheezecakee/fitrkr-atlas/internal/core/application/commands/categories"
 	"github.com/cheezecakee/fitrkr-atlas/internal/core/application/commands/equipments"
+	"github.com/cheezecakee/fitrkr-atlas/internal/core/application/commands/exercises"
 	"github.com/cheezecakee/fitrkr-atlas/internal/core/application/commands/muscles"
 	Qcategories "github.com/cheezecakee/fitrkr-atlas/internal/core/application/queries/categories"
 	Qequipments "github.com/cheezecakee/fitrkr-atlas/internal/core/application/queries/equipments"
+	Qexercises "github.com/cheezecakee/fitrkr-atlas/internal/core/application/queries/exercises"
 	Qmuscles "github.com/cheezecakee/fitrkr-atlas/internal/core/application/queries/muscles"
 	"github.com/cheezecakee/fitrkr-atlas/internal/core/ports"
 )
@@ -16,61 +18,14 @@ type Application struct {
 	Queries  Queries
 }
 
-type Commands struct {
-	// Equipment
-	CreateEquipment  *equipments.CreateEquipmentCommand
-	UpdateEquipment  *equipments.UpdateEquipmentCommand
-	DeleteEquipment  *equipments.DeleteEquipmentCommand
-	CreateAttachment *equipments.CreateAttachmentCommand
-	UpdateAttachment *equipments.UpdateAttachmentCommand
-	DeleteAttachment *equipments.DeleteAttachmentCommand
-
-	// Muscle & MuscleGroup
-	CreateMuscleGroup *muscles.CreateMuscleGroupCommand
-	UpdateMuscleGroup *muscles.UpdateMuscleGroupCommand
-	DeleteMuscleGroup *muscles.DeleteMuscleGroupCommand
-	CreateMuscle      *muscles.CreateMuscleCommand
-	UpdateMuscle      *muscles.UpdateMuscleCommand
-	DeleteMuscle      *muscles.DeleteMuscleCommand
-
-	// Category & Subcategory
-	CreateCategory    *categories.CreateCategoryCommand
-	UpdateCategory    *categories.UpdateCategoryCommand
-	DeleteCategory    *categories.DeleteCategoryCommand
-	CreateSubcategory *categories.CreateSubcategoryCommand
-	UpdateSubcategory *categories.UpdateSubcategoryCommand
-	DeleteSubcategory *categories.DeleteSubcategoryCommand
-}
-
-type Queries struct {
-	// Equipment
-	GetEquipmentByID           *Qequipments.GetEquipmentByIDQuery
-	GetAllEquipments           *Qequipments.GetAllEquipmentsQuery
-	GetAttachmentByID          *Qequipments.GetAttachmentByIDQuery
-	GetAllAttachments          *Qequipments.GetAllAttachmentsQuery
-	GetAttachmentByEquipmentID *Qequipments.GetAttachmentsByEquipmentIDQuery
-
-	// Muscle & MuscleGroup
-	GetMuscleGroupByID        *Qmuscles.GetMuscleGroupByIDQuery
-	GetAllMuscleGroups        *Qmuscles.GetAllMuscleGroupsQuery
-	GetMuscleByID             *Qmuscles.GetMuscleByIDQuery
-	GetAllMuscles             *Qmuscles.GetAllMusclesQuery
-	GetMusclesByMuscleGroupID *Qmuscles.GetMusclesByMuscleGroupIDQuery
-
-	// Category & Subcategory
-	GetCategoryByID              *Qcategories.GetCategoryByIDQuery
-	GetAllCategories             *Qcategories.GetAllCategoriesQuery
-	GetSubcategoryByID           *Qcategories.GetSubcategoryByIDQuery
-	GetAllSubcategories          *Qcategories.GetAllSubcategoriesQuery
-	GetSubcategoriesByCategoryID *Qcategories.GetSubcategoriesByCategoryIDQuery
-}
-
 func New(
 	// Equipment ports
 	equipmentWrite ports.EquipmentWrite,
 	equipmentRead ports.EquipmentRead,
-	attachmentWrite ports.EquipmentAttachmentWrite,
-	attachmentRead ports.EquipmentAttachmentRead,
+	equipmentAttachmentWrite ports.EquipmentAttachmentWrite,
+	equipmentAttachmentRead ports.EquipmentAttachmentRead,
+	attachmentWrite ports.AttachmentWrite,
+	attachmentRead ports.AttachmentRead,
 
 	// Muscle ports
 	muscleGroupWrite ports.MuscleGroupWrite,
@@ -83,133 +38,253 @@ func New(
 	categoryRead ports.CategoryRead,
 	subcategoryWrite ports.SubcategoryWrite,
 	subcategoryRead ports.SubcategoryRead,
+
+	// Exercise ports
+	exerciseWrite ports.ExerciseWrite,
+	exerciseRead ports.ExerciseRead,
+
+	exerciseAliasWrite ports.ExerciseAliasWrite,
+	exerciseAliasRead ports.ExerciseAliasRead,
+
+	exerciseEquipmentWrite ports.ExerciseEquipmentWrite,
+	exerciseEquipmentRead ports.ExerciseEquipmentRead,
+
+	exerciseMuscleWrite ports.ExerciseMuscleWrite,
+	exerciseMuscleRead ports.ExerciseMuscleRead,
+
+	exerciseCategoryWrite ports.ExerciseCategoryWrite,
+	exerciseCategoryRead ports.ExerciseCategoryRead,
+
+	exerciseMediaWrite ports.ExerciseMediaWrite,
+	exerciseMediaRead ports.ExerciseMediaRead,
+
+	exerciseInstructionWrite ports.ExerciseInstructionWrite,
+	exerciseInstructionRead ports.ExerciseInstructionRead,
+
+	exerciseVariationWrite ports.ExerciseVariationWrite,
+	// variationRead ports.ExerciseVariationRead,
+
+	exerciseAlternateWrite ports.ExerciseAlternateWrite,
+	// alternateRead ports.ExerciseAlternateRead,
 ) *Application {
+	exerciseReadGroup := &ports.ExerciseReadGroup{
+		ExerciseRead: exerciseRead,
+		Alias:        exerciseAliasRead,
+		Equipment:    exerciseEquipmentRead,
+		Muscle:       exerciseMuscleRead,
+		Category:     exerciseCategoryRead,
+		Media:        exerciseMediaRead,
+		Instruction:  exerciseInstructionRead,
+	}
+
+	exerciseWriteGroup := &ports.ExerciseWriteGroup{
+		ExerciseWrite: exerciseWrite,
+		Alias:         exerciseAliasWrite,
+		Equipment:     exerciseEquipmentWrite,
+		Muscle:        exerciseMuscleWrite,
+		Category:      exerciseCategoryWrite,
+		Media:         exerciseMediaWrite,
+		Instruction:   exerciseInstructionWrite,
+	}
+
+	equipmentWriteGroup := &ports.EquipmentWriteGroup{
+		EquipmentWrite: equipmentWrite,
+		Attachment:     equipmentAttachmentWrite,
+	}
+
+	equipmentReadGroup := &ports.EquipmentReadGroup{
+		EquipmentRead: equipmentRead,
+		Attachment:    equipmentAttachmentRead,
+	}
+
+	muscleWriteGroup := &ports.MuscleWriteGroup{
+		MuscleWrite: muscleWrite,
+		Group:       muscleGroupWrite,
+	}
+
+	muscleReadGroup := &ports.MuscleReadGroup{
+		MuscleRead: muscleRead,
+		Group:      muscleGroupRead,
+	}
+
+	categoryWriteGroup := &ports.CategoryWriteGroup{
+		CategoryWrite: categoryWrite,
+		Subcategory:   subcategoryWrite,
+	}
+
+	categoryReadGroup := &ports.CategoryReadGroup{
+		CategoryRead: categoryRead,
+		Subcategory:  subcategoryRead,
+	}
+
+	write := &ports.Write{
+		Exercise:   *exerciseWriteGroup,
+		Equipment:  *equipmentWriteGroup,
+		Attachment: attachmentWrite,
+		Muscle:     *muscleWriteGroup,
+		Category:   *categoryWriteGroup,
+	}
+
+	read := &ports.Read{
+		Exercise:   *exerciseReadGroup,
+		Equipment:  *equipmentReadGroup,
+		Attachment: attachmentRead,
+		Muscle:     *muscleReadGroup,
+		Category:   *categoryReadGroup,
+	}
+
 	return &Application{
 		Commands: Commands{
+			// Exercise commands
+			CreateExercise: &exercises.CreateExerciseCommand{
+				Write: *write,
+				Read:  *read,
+			},
+			UpdateExercise: &exercises.UpdateExerciseCommand{
+				Write: *write,
+				Read:  *read,
+			},
+			DeleteExercise: &exercises.DeleteExerciseCommand{
+				Write: *write,
+				Read:  *read,
+			},
+
 			// Equipment commands
 			CreateEquipment: &equipments.CreateEquipmentCommand{
-				Write: equipmentWrite,
-				Read:  equipmentRead,
+				Write: *write,
+				Read:  *read,
 			},
 			UpdateEquipment: &equipments.UpdateEquipmentCommand{
-				Write: equipmentWrite,
-				Read:  equipmentRead,
+				Write: *write,
+				Read:  *read,
 			},
 			DeleteEquipment: &equipments.DeleteEquipmentCommand{
-				Write: equipmentWrite,
+				Write: *write,
 			},
 			CreateAttachment: &equipments.CreateAttachmentCommand{
-				Write: attachmentWrite,
-				Read:  equipmentRead,
+				Write: *write,
+				Read:  *read,
 			},
 			UpdateAttachment: &equipments.UpdateAttachmentCommand{
-				Write:         attachmentWrite,
-				Read:          attachmentRead,
-				ReadEquipment: equipmentRead,
+				Write: *write,
+				Read:  *read,
 			},
 			DeleteAttachment: &equipments.DeleteAttachmentCommand{
-				Write: attachmentWrite,
+				Write: *write,
 			},
-
+			CreateEquipmentAttachment: &equipments.CreateEquipmentAttachmentCommand{
+				Write: *write,
+				Read:  *read,
+			},
+			DeleteEquipmentAttachment: &equipments.DeleteEquipmentAttachmentCommand{
+				Write: *write,
+			},
 			// Muscle & MuscleGroup commands
 			CreateMuscleGroup: &muscles.CreateMuscleGroupCommand{
-				Write: muscleGroupWrite,
+				Write: *write,
 			},
 			UpdateMuscleGroup: &muscles.UpdateMuscleGroupCommand{
-				Write: muscleGroupWrite,
-				Read:  muscleGroupRead,
+				Write: *write,
+				Read:  *read,
 			},
 			DeleteMuscleGroup: &muscles.DeleteMuscleGroupCommand{
-				Write: muscleGroupWrite,
+				Write: *write,
 			},
 			CreateMuscle: &muscles.CreateMuscleCommand{
-				Write: muscleWrite,
-				Read:  muscleGroupRead,
+				Write: *write,
+				Read:  *read,
 			},
 			UpdateMuscle: &muscles.UpdateMuscleCommand{
-				Write:     muscleWrite,
-				Read:      muscleRead,
-				ReadGroup: muscleGroupRead,
+				Write: *write,
+				Read:  *read,
 			},
 			DeleteMuscle: &muscles.DeleteMuscleCommand{
-				Write: muscleWrite,
+				Write: *write,
 			},
-
 			// Category & Subcategory commands
 			CreateCategory: &categories.CreateCategoryCommand{
-				Write: categoryWrite,
+				Write: *write,
 			},
 			UpdateCategory: &categories.UpdateCategoryCommand{
-				Write: categoryWrite,
-				Read:  categoryRead,
+				Write: *write,
+				Read:  *read,
 			},
 			DeleteCategory: &categories.DeleteCategoryCommand{
-				Write: categoryWrite,
+				Write: *write,
 			},
 			CreateSubcategory: &categories.CreateSubcategoryCommand{
-				Write: subcategoryWrite,
-				Read:  categoryRead,
+				Write: *write,
+				Read:  *read,
 			},
 			UpdateSubcategory: &categories.UpdateSubcategoryCommand{
-				Write:        subcategoryWrite,
-				Read:         subcategoryRead,
-				ReadCategory: categoryRead,
+				Write: *write,
+				Read:  *read,
 			},
 			DeleteSubcategory: &categories.DeleteSubcategoryCommand{
-				Write: subcategoryWrite,
+				Write: *write,
 			},
 		},
 		Queries: Queries{
 			// Equipment queries
 			GetEquipmentByID: &Qequipments.GetEquipmentByIDQuery{
-				Read: equipmentRead,
+				Read: *read,
 			},
 			GetAllEquipments: &Qequipments.GetAllEquipmentsQuery{
-				Read: equipmentRead,
+				Read: *read,
 			},
 			GetAttachmentByID: &Qequipments.GetAttachmentByIDQuery{
-				Read: attachmentRead,
+				Read: *read,
 			},
 			GetAllAttachments: &Qequipments.GetAllAttachmentsQuery{
-				Read: attachmentRead,
+				Read: *read,
 			},
-			GetAttachmentByEquipmentID: &Qequipments.GetAttachmentsByEquipmentIDQuery{
-				Read: attachmentRead,
+			GetEquipmentAttachmentByEquipmentID: &Qequipments.GetEquipmentAttachmentByEquipmentIDQuery{
+				Read: *read,
 			},
 
 			// Muscle & MuscleGroup queries
 			GetMuscleGroupByID: &Qmuscles.GetMuscleGroupByIDQuery{
-				Read: muscleGroupRead,
+				Read: *read,
 			},
 			GetAllMuscleGroups: &Qmuscles.GetAllMuscleGroupsQuery{
-				Read: muscleGroupRead,
+				Read: *read,
 			},
 			GetMuscleByID: &Qmuscles.GetMuscleByIDQuery{
-				Read: muscleRead,
+				Read: *read,
 			},
 			GetAllMuscles: &Qmuscles.GetAllMusclesQuery{
-				Read: muscleRead,
+				Read: *read,
 			},
 			GetMusclesByMuscleGroupID: &Qmuscles.GetMusclesByMuscleGroupIDQuery{
-				Read: muscleRead,
+				Read: *read,
 			},
 
 			// Category & Subcategory queries
 			GetCategoryByID: &Qcategories.GetCategoryByIDQuery{
-				Read: categoryRead,
+				Read: *read,
 			},
 			GetAllCategories: &Qcategories.GetAllCategoriesQuery{
-				Read: categoryRead,
+				Read: *read,
 			},
 			GetSubcategoryByID: &Qcategories.GetSubcategoryByIDQuery{
-				Read: subcategoryRead,
+				Read: *read,
 			},
 			GetAllSubcategories: &Qcategories.GetAllSubcategoriesQuery{
-				Read: subcategoryRead,
+				Read: *read,
 			},
 			GetSubcategoriesByCategoryID: &Qcategories.GetSubcategoriesByCategoryIDQuery{
-				Read: subcategoryRead,
+				Read: *read,
 			},
+
+			// Exercise queries
+			GetExerciseAliasByID:       &Qexercises.GetAliasByIDQuery{Read: *read},
+			GetExerciseCategoryByID:    &Qexercises.GetCategoryByIDQuery{Read: *read},
+			GetExerciseEquipmentByID:   &Qexercises.GetEquipmentByIDQuery{Read: *read},
+			GetExerciseMuscleByID:      &Qexercises.GetMuscleByIDQuery{Read: *read},
+			GetExerciseByID:            &Qexercises.GetExerciseByIDQuery{Read: *read},
+			GetExerciseByName:          &Qexercises.GetExerciseByNameQuery{Read: *read},
+			GetExerciseInstructionByID: &Qexercises.GetInstructionByIDQuery{Read: *read},
+			GetExerciseMediaByID:       &Qexercises.GetMediaByIDQuery{Read: *read},
 		},
 	}
 }
