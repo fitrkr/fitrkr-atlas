@@ -41,3 +41,7 @@ func Response(w http.ResponseWriter, status int, message any) {
 		log.Printf("Failed to encode JSON response: %v", err)
 	}
 }
+
+func ResponseNoMsg(w http.ResponseWriter, status int) {
+	w.WriteHeader(status)
+}
