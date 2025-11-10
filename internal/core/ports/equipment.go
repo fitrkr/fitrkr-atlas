@@ -41,6 +41,5 @@ type EquipmentAttachmentWrite interface {
 }
 
 type EquipmentAttachmentRead interface {
-	GetByID(ctx context.Context, id int) (*equipment.EquipmentAttachment, error)
 	GetByEquipmentID(ctx context.Context, equipmentID int) ([]equipment.EquipmentAttachment, error)
 }
