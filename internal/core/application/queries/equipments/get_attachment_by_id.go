@@ -4,15 +4,13 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/cheezecakee/logr"
-
 	"github.com/cheezecakee/fitrkr-atlas/internal/core/domain/equipment"
 	"github.com/cheezecakee/fitrkr-atlas/internal/core/ports"
 )
 
 type GetAttachmentByIDQuery struct {
 	ID   int `json:"id"`
-	Read ports.EquipmentAttachmentRead
+	Read ports.Read
 }
 
 type GetAttachmentByIDResp struct {
@@ -20,9 +18,8 @@ type GetAttachmentByIDResp struct {
 }
 
 func (qry *GetAttachmentByIDQuery) Handle(ctx context.Context) (any, error) {
-	attachment, err := qry.Read.GetByID(ctx, qry.ID)
+	attachment, err := qry.Read.Attachment.GetByID(ctx, qry.ID)
 	if err != nil {
-		logr.Get().Errorf("failed to get attachment: %v", err)
 		return GetAttachmentByIDResp{}, fmt.Errorf("failed to get attachment: %w", err)
 	}
 

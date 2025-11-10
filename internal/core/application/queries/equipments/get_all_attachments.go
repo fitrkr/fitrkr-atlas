@@ -4,14 +4,12 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/cheezecakee/logr"
-
 	"github.com/cheezecakee/fitrkr-atlas/internal/core/domain/equipment"
 	"github.com/cheezecakee/fitrkr-atlas/internal/core/ports"
 )
 
 type GetAllAttachmentsQuery struct {
-	Read ports.EquipmentAttachmentRead
+	Read ports.Read
 }
 
 type GetAllAttachmentsResp struct {
@@ -19,9 +17,8 @@ type GetAllAttachmentsResp struct {
 }
 
 func (qry *GetAllAttachmentsQuery) Handle(ctx context.Context) (any, error) {
-	attachments, err := qry.Read.GetAll(ctx)
+	attachments, err := qry.Read.Attachment.GetAll(ctx)
 	if err != nil {
-		logr.Get().Errorf("failed to get attachments: %v", err)
 		return GetAllAttachmentsResp{}, fmt.Errorf("failed to get attachments: %w", err)
 	}
 
