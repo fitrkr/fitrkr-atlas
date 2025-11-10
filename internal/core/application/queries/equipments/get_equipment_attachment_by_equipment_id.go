@@ -8,20 +8,20 @@ import (
 	"github.com/cheezecakee/fitrkr-atlas/internal/core/ports"
 )
 
-type GetEquipmentAttachmentByIDQuery struct {
+type GetEquipmentAttachmentByEquipmentIDQuery struct {
 	EquipmentID int `json:"id"`
 	Read        ports.Read
 }
 
-type GetEquipmentAttachmentByIDResp struct {
+type GetEquipmentAttachmentByEquipmentIDResp struct {
 	EquipmentAttachment []equipment.EquipmentAttachment
 }
 
-func (qry *GetEquipmentAttachmentByIDQuery) Handle(ctx context.Context) (any, error) {
+func (qry *GetEquipmentAttachmentByEquipmentIDQuery) Handle(ctx context.Context) (any, error) {
 	equipmentAttachment, err := qry.Read.Equipment.Attachment.GetByEquipmentID(ctx, qry.EquipmentID)
 	if err != nil {
-		return GetEquipmentAttachmentByIDResp{}, fmt.Errorf("failed to get equipment attachment: %w", err)
+		return GetEquipmentAttachmentByEquipmentIDResp{}, fmt.Errorf("failed to get equipment attachment: %w", err)
 	}
 
-	return GetEquipmentAttachmentByIDResp{EquipmentAttachment: equipmentAttachment}, nil
+	return GetEquipmentAttachmentByEquipmentIDResp{EquipmentAttachment: equipmentAttachment}, nil
 }
