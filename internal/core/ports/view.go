@@ -13,6 +13,6 @@ type ViewWrite interface {
 }
 
 type ViewRead interface {
-	GetByID(ctx context.Context, id int) (*view.View, error)
+	GetByID(ctx context.Context, exerciseID int) (*view.View, error)
 	GetAll(ctx context.Context) ([]*view.View, error)
 }
