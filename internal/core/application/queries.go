@@ -17,28 +17,21 @@ type Queries struct {
 	GetEquipmentAttachmentByEquipmentID *equipments.GetEquipmentAttachmentByEquipmentIDQuery
 
 	// Muscle & MuscleGroup
-	GetMuscleGroupByID        *muscles.GetMuscleGroupByIDQuery
-	GetAllMuscleGroups        *muscles.GetAllMuscleGroupsQuery
-	GetMuscleByID             *muscles.GetMuscleByIDQuery
-	GetAllMuscles             *muscles.GetAllMusclesQuery
-	GetMusclesByMuscleGroupID *muscles.GetMusclesByMuscleGroupIDQuery
+	GetMuscleByID         *muscles.GetMuscleByIDQuery
+	GetAllMuscles         *muscles.GetAllMusclesQuery
+	GetMusclesByGroupType *muscles.GetMusclesByMuscleGroupIDQuery
 
 	// Category & Subcategory
-	GetCategoryByID              *categories.GetCategoryByIDQuery
-	GetAllCategories             *categories.GetAllCategoriesQuery
-	GetSubcategoryByID           *categories.GetSubcategoryByIDQuery
-	GetAllSubcategories          *categories.GetAllSubcategoriesQuery
-	GetSubcategoriesByCategoryID *categories.GetSubcategoriesByCategoryIDQuery
+	GetCategoryByID  *categories.GetCategoryByIDQuery
+	GetAllCategories *categories.GetAllCategoriesQuery
 
 	// Exercise
-	GetExerciseAliasByID       *exercises.GetAliasByIDQuery
-	GetExerciseCategoryByID    *exercises.GetCategoryByIDQuery
-	GetExerciseEquipmentByID   *exercises.GetEquipmentByIDQuery
-	GetExerciseMuscleByID      *exercises.GetMuscleByIDQuery
-	GetExerciseByID            *exercises.GetExerciseByIDQuery
-	GetExerciseByName          *exercises.GetExerciseByNameQuery
-	GetExerciseInstructionByID *exercises.GetInstructionByIDQuery
-	GetExerciseMediaByID       *exercises.GetMediaByIDQuery
+	GetExerciseAliasByID     *exercises.GetAliasByIDQuery
+	GetExerciseCategoryByID  *exercises.GetCategoryByIDQuery
+	GetExerciseEquipmentByID *exercises.GetEquipmentByIDQuery
+	GetExerciseMuscleByID    *exercises.GetMuscleByIDQuery
+	GetExerciseByID          *exercises.GetExerciseByIDQuery
+	GetExerciseByName        *exercises.GetExerciseByNameQuery
 
 	// View
 	GetViewByID *view.GetViewByIDQuery

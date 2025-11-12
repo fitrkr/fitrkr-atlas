@@ -29,16 +29,12 @@ func New(
 	attachmentRead ports.AttachmentRead,
 
 	// Muscle ports
-	muscleGroupWrite ports.MuscleGroupWrite,
-	muscleGroupRead ports.MuscleGroupRead,
 	muscleWrite ports.MuscleWrite,
 	muscleRead ports.MuscleRead,
 
 	// Category ports
 	categoryWrite ports.CategoryWrite,
 	categoryRead ports.CategoryRead,
-	subcategoryWrite ports.SubcategoryWrite,
-	subcategoryRead ports.SubcategoryRead,
 
 	// Exercise ports
 	exerciseWrite ports.ExerciseWrite,
@@ -56,18 +52,6 @@ func New(
 	exerciseCategoryWrite ports.ExerciseCategoryWrite,
 	exerciseCategoryRead ports.ExerciseCategoryRead,
 
-	exerciseMediaWrite ports.ExerciseMediaWrite,
-	exerciseMediaRead ports.ExerciseMediaRead,
-
-	exerciseInstructionWrite ports.ExerciseInstructionWrite,
-	exerciseInstructionRead ports.ExerciseInstructionRead,
-
-	exerciseVariationWrite ports.ExerciseVariationWrite,
-	// variationRead ports.ExerciseVariationRead,
-
-	exerciseAlternateWrite ports.ExerciseAlternateWrite,
-	// alternateRead ports.ExerciseAlternateRead,
-
 	viewWrite ports.ViewWrite,
 	viewRead ports.ViewRead,
 ) *Application {
@@ -77,8 +61,6 @@ func New(
 		Equipment:    exerciseEquipmentRead,
 		Muscle:       exerciseMuscleRead,
 		Category:     exerciseCategoryRead,
-		Media:        exerciseMediaRead,
-		Instruction:  exerciseInstructionRead,
 	}
 
 	exerciseWriteGroup := &ports.ExerciseWriteGroup{
@@ -87,8 +69,6 @@ func New(
 		Equipment:     exerciseEquipmentWrite,
 		Muscle:        exerciseMuscleWrite,
 		Category:      exerciseCategoryWrite,
-		Media:         exerciseMediaWrite,
-		Instruction:   exerciseInstructionWrite,
 	}
 
 	equipmentWriteGroup := &ports.EquipmentWriteGroup{
@@ -101,32 +81,12 @@ func New(
 		Attachment:    equipmentAttachmentRead,
 	}
 
-	muscleWriteGroup := &ports.MuscleWriteGroup{
-		MuscleWrite: muscleWrite,
-		Group:       muscleGroupWrite,
-	}
-
-	muscleReadGroup := &ports.MuscleReadGroup{
-		MuscleRead: muscleRead,
-		Group:      muscleGroupRead,
-	}
-
-	categoryWriteGroup := &ports.CategoryWriteGroup{
-		CategoryWrite: categoryWrite,
-		Subcategory:   subcategoryWrite,
-	}
-
-	categoryReadGroup := &ports.CategoryReadGroup{
-		CategoryRead: categoryRead,
-		Subcategory:  subcategoryRead,
-	}
-
 	write := &ports.Write{
 		Exercise:   *exerciseWriteGroup,
 		Equipment:  *equipmentWriteGroup,
 		Attachment: attachmentWrite,
-		Muscle:     *muscleWriteGroup,
-		Category:   *categoryWriteGroup,
+		Muscle:     muscleWrite,
+		Category:   categoryWrite,
 		View:       viewWrite,
 	}
 
@@ -134,8 +94,8 @@ func New(
 		Exercise:   *exerciseReadGroup,
 		Equipment:  *equipmentReadGroup,
 		Attachment: attachmentRead,
-		Muscle:     *muscleReadGroup,
-		Category:   *categoryReadGroup,
+		Muscle:     muscleRead,
+		Category:   categoryRead,
 		View:       viewRead,
 	}
 
@@ -186,16 +146,6 @@ func New(
 				Write: *write,
 			},
 			// Muscle & MuscleGroup commands
-			CreateMuscleGroup: &muscles.CreateMuscleGroupCommand{
-				Write: *write,
-			},
-			UpdateMuscleGroup: &muscles.UpdateMuscleGroupCommand{
-				Write: *write,
-				Read:  *read,
-			},
-			DeleteMuscleGroup: &muscles.DeleteMuscleGroupCommand{
-				Write: *write,
-			},
 			CreateMuscle: &muscles.CreateMuscleCommand{
 				Write: *write,
 				Read:  *read,
@@ -218,17 +168,6 @@ func New(
 			DeleteCategory: &categories.DeleteCategoryCommand{
 				Write: *write,
 			},
-			CreateSubcategory: &categories.CreateSubcategoryCommand{
-				Write: *write,
-				Read:  *read,
-			},
-			UpdateSubcategory: &categories.UpdateSubcategoryCommand{
-				Write: *write,
-				Read:  *read,
-			},
-			DeleteSubcategory: &categories.DeleteSubcategoryCommand{
-				Write: *write,
-			},
 		},
 		Queries: Queries{
 			// Equipment queries
@@ -249,19 +188,10 @@ func New(
 			},
 
 			// Muscle & MuscleGroup queries
-			GetMuscleGroupByID: &Qmuscles.GetMuscleGroupByIDQuery{
-				Read: *read,
-			},
-			GetAllMuscleGroups: &Qmuscles.GetAllMuscleGroupsQuery{
-				Read: *read,
-			},
 			GetMuscleByID: &Qmuscles.GetMuscleByIDQuery{
 				Read: *read,
 			},
 			GetAllMuscles: &Qmuscles.GetAllMusclesQuery{
-				Read: *read,
-			},
-			GetMusclesByMuscleGroupID: &Qmuscles.GetMusclesByMuscleGroupIDQuery{
 				Read: *read,
 			},
 
@@ -272,25 +202,14 @@ func New(
 			GetAllCategories: &Qcategories.GetAllCategoriesQuery{
 				Read: *read,
 			},
-			GetSubcategoryByID: &Qcategories.GetSubcategoryByIDQuery{
-				Read: *read,
-			},
-			GetAllSubcategories: &Qcategories.GetAllSubcategoriesQuery{
-				Read: *read,
-			},
-			GetSubcategoriesByCategoryID: &Qcategories.GetSubcategoriesByCategoryIDQuery{
-				Read: *read,
-			},
 
 			// Exercise queries
-			GetExerciseAliasByID:       &Qexercises.GetAliasByIDQuery{Read: *read},
-			GetExerciseCategoryByID:    &Qexercises.GetCategoryByIDQuery{Read: *read},
-			GetExerciseEquipmentByID:   &Qexercises.GetEquipmentByIDQuery{Read: *read},
-			GetExerciseMuscleByID:      &Qexercises.GetMuscleByIDQuery{Read: *read},
-			GetExerciseByID:            &Qexercises.GetExerciseByIDQuery{Read: *read},
-			GetExerciseByName:          &Qexercises.GetExerciseByNameQuery{Read: *read},
-			GetExerciseInstructionByID: &Qexercises.GetInstructionByIDQuery{Read: *read},
-			GetExerciseMediaByID:       &Qexercises.GetMediaByIDQuery{Read: *read},
+			GetExerciseAliasByID:     &Qexercises.GetAliasByIDQuery{Read: *read},
+			GetExerciseCategoryByID:  &Qexercises.GetCategoryByIDQuery{Read: *read},
+			GetExerciseEquipmentByID: &Qexercises.GetEquipmentByIDQuery{Read: *read},
+			GetExerciseMuscleByID:    &Qexercises.GetMuscleByIDQuery{Read: *read},
+			GetExerciseByID:          &Qexercises.GetExerciseByIDQuery{Read: *read},
+			GetExerciseByName:        &Qexercises.GetExerciseByNameQuery{Read: *read},
 
 			// View queries
 			GetViewByID: &Qview.GetViewByIDQuery{Read: *read},

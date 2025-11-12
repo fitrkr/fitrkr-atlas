@@ -1,16 +1,26 @@
 -- +goose Up
 
 CREATE TYPE difficulty_level AS ENUM ('beginner', 'intermediate', 'advanced', 'elite');
-CREATE TYPE exercise_type AS ENUM ('body_weight', 'free_weight', 'machine');
+CREATE TYPE body_position AS ENUM (
+   'standing', 
+   'sitting',   
+   'kneeling',  
+   'prone',     
+   'supine',    
+   'sidelying',
+   'quadruped ',
+   'halfkneeling',
+   'inverted',  
+   'hanging'
+);
 
 -- Main Table 
 CREATE TABLE exercise (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL UNIQUE,
     description TEXT,
-    type exercise_type NOT NULL,
     difficulty difficulty_level NOT NULL,
-    body_position VARCHAR(50) NOT NULL,
+    position body_position NOT NULL,
     created_at TIMESTAMP, 
     updated_at TIMESTAMP, 
     deleted_at TIMESTAMP, -- Soft delete 
@@ -21,3 +31,4 @@ CREATE TABLE exercise (
 DROP TABLE IF EXISTS exercise;
 DROP TYPE IF EXISTS difficulty_level;
 DROP TYPE IF EXISTS exercise_type;
+DROP TYPE IF EXISTS body_position;

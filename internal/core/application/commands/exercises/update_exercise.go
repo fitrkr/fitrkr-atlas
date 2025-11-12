@@ -57,7 +57,7 @@ func (cmd *UpdateExerciseCommand) Handle(ctx context.Context) (any, error) {
 
 	exists.Touch()
 
-	err = cmd.Write.Exercise.Update(ctx, *exists)
+	_, err = cmd.Write.Exercise.Update(ctx, *exists)
 	if err != nil {
 		return nil, fmt.Errorf("failed to update exercise: %w", err)
 	}

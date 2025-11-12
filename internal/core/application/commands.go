@@ -19,20 +19,14 @@ type Commands struct {
 	DeleteEquipmentAttachment *equipments.DeleteEquipmentAttachmentCommand
 
 	// Muscle & MuscleGroup
-	CreateMuscleGroup *muscles.CreateMuscleGroupCommand
-	UpdateMuscleGroup *muscles.UpdateMuscleGroupCommand
-	DeleteMuscleGroup *muscles.DeleteMuscleGroupCommand
-	CreateMuscle      *muscles.CreateMuscleCommand
-	UpdateMuscle      *muscles.UpdateMuscleCommand
-	DeleteMuscle      *muscles.DeleteMuscleCommand
+	CreateMuscle *muscles.CreateMuscleCommand
+	UpdateMuscle *muscles.UpdateMuscleCommand
+	DeleteMuscle *muscles.DeleteMuscleCommand
 
 	// Category & Subcategory
-	CreateCategory    *categories.CreateCategoryCommand
-	UpdateCategory    *categories.UpdateCategoryCommand
-	DeleteCategory    *categories.DeleteCategoryCommand
-	CreateSubcategory *categories.CreateSubcategoryCommand
-	UpdateSubcategory *categories.UpdateSubcategoryCommand
-	DeleteSubcategory *categories.DeleteSubcategoryCommand
+	CreateCategory *categories.CreateCategoryCommand
+	UpdateCategory *categories.UpdateCategoryCommand
+	DeleteCategory *categories.DeleteCategoryCommand
 
 	// Exercise
 	CreateExercise *exercises.CreateExerciseCommand
