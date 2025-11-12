@@ -6,6 +6,7 @@ type Write struct {
 	Attachment AttachmentWrite
 	Muscle     MuscleWriteGroup
 	Category   CategoryWriteGroup
+	View       ViewWrite
 }
 
 type Read struct {
@@ -14,6 +15,7 @@ type Read struct {
 	Attachment AttachmentRead
 	Muscle     MuscleReadGroup
 	Category   CategoryReadGroup
+	View       ViewRead
 }
 
 type EquipmentWriteGroup struct {
