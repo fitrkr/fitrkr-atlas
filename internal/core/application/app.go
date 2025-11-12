@@ -10,6 +10,7 @@ import (
 	Qequipments "github.com/cheezecakee/fitrkr-atlas/internal/core/application/queries/equipments"
 	Qexercises "github.com/cheezecakee/fitrkr-atlas/internal/core/application/queries/exercises"
 	Qmuscles "github.com/cheezecakee/fitrkr-atlas/internal/core/application/queries/muscles"
+	Qview "github.com/cheezecakee/fitrkr-atlas/internal/core/application/queries/view"
 	"github.com/cheezecakee/fitrkr-atlas/internal/core/ports"
 )
 
@@ -66,6 +67,9 @@ func New(
 
 	exerciseAlternateWrite ports.ExerciseAlternateWrite,
 	// alternateRead ports.ExerciseAlternateRead,
+
+	viewWrite ports.ViewWrite,
+	viewRead ports.ViewRead,
 ) *Application {
 	exerciseReadGroup := &ports.ExerciseReadGroup{
 		ExerciseRead: exerciseRead,
@@ -123,6 +127,7 @@ func New(
 		Attachment: attachmentWrite,
 		Muscle:     *muscleWriteGroup,
 		Category:   *categoryWriteGroup,
+		View:       viewWrite,
 	}
 
 	read := &ports.Read{
@@ -131,6 +136,7 @@ func New(
 		Attachment: attachmentRead,
 		Muscle:     *muscleReadGroup,
 		Category:   *categoryReadGroup,
+		View:       viewRead,
 	}
 
 	return &Application{
@@ -285,6 +291,10 @@ func New(
 			GetExerciseByName:          &Qexercises.GetExerciseByNameQuery{Read: *read},
 			GetExerciseInstructionByID: &Qexercises.GetInstructionByIDQuery{Read: *read},
 			GetExerciseMediaByID:       &Qexercises.GetMediaByIDQuery{Read: *read},
+
+			// View queries
+			GetViewByID: &Qview.GetViewByIDQuery{Read: *read},
+			GetAllView:  &Qview.GetAllViewQuery{Read: *read},
 		},
 	}
 }
