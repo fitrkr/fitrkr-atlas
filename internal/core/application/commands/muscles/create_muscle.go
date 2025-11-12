@@ -10,28 +10,28 @@ import (
 )
 
 type CreateMuscleCommand struct {
-	Name          string `json:"name"`
-	MuscleGroupID int    `json:"muscle_group_id"`
-	Write         ports.Write
-	Read          ports.Read
+	Name      string `json:"name"`
+	GroupType string `json:"group_type"`
+	Write     ports.Write
+	Read      ports.Read
 }
 
 type CreateMuscleResp struct{}
 
 func (cmd *CreateMuscleCommand) Handle(ctx context.Context) (any, error) {
-	_, err := cmd.Read.Muscle.Group.GetByID(ctx, cmd.MuscleGroupID)
+	groupType, err := muscle.NewMuscleGroupType(cmd.GroupType)
 	if err != nil {
-		return CreateMuscleResp{}, fmt.Errorf("failed to get muscle group: %w", err)
+		return nil, err
 	}
 
-	m, err := muscle.New(cmd.Name, cmd.MuscleGroupID)
+	m, err := muscle.New(cmd.Name, groupType)
 	if err != nil {
 		return CreateMuscleResp{}, fmt.Errorf("failed to create new muscle: %w", err)
 	}
 
 	err = cmd.Write.Muscle.Add(ctx, m)
 	if err != nil {
-		return CreateMuscleResp{}, fmt.Errorf("failed to add muscle: %w", err)
+		return CreateMuscleResp{}, fmt.Errorf("failed to insert muscle: %w", err)
 	}
 
 	return CreateMuscleResp{}, nil

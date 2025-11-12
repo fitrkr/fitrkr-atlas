@@ -4,15 +4,16 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/cheezecakee/fitrkr-atlas/internal/core/domain/muscle"
 	"github.com/cheezecakee/fitrkr-atlas/internal/core/ports"
 )
 
 type UpdateMuscleCommand struct {
-	ID            int    `json:"id"`
-	MuscleGroupID *int   `json:"muscle_group_id"`
-	Name          string `json:"name"`
-	Write         ports.Write
-	Read          ports.Read
+	ID        int    `json:"id"`
+	GroupType string `json:"group_type"`
+	Name      string `json:"name"`
+	Write     ports.Write
+	Read      ports.Read
 }
 
 type UpdateMuscleResp struct{}
@@ -20,18 +21,18 @@ type UpdateMuscleResp struct{}
 func (cmd *UpdateMuscleCommand) Handle(ctx context.Context) (any, error) {
 	existing, err := cmd.Read.Muscle.GetByID(ctx, cmd.ID)
 	if err != nil {
-		return UpdateMuscleResp{}, fmt.Errorf("failed to get muscle: %w", err)
+		return UpdateMuscleResp{}, fmt.Errorf("failed to read muscle: %w", err)
 	}
 
 	if cmd.Name != "" {
 		existing.Name = cmd.Name
 	}
-	if cmd.MuscleGroupID != nil {
-		_, err := cmd.Read.Muscle.Group.GetByID(ctx, *cmd.MuscleGroupID)
+	if cmd.GroupType != "" && cmd.GroupType != existing.Group.ToString() {
+		groupType, err := muscle.NewMuscleGroupType(cmd.GroupType)
 		if err != nil {
-			return UpdateMuscleResp{}, fmt.Errorf("failed to get muscle group: %w", err)
+			return nil, err
 		}
-		existing.MuscleGroupID = *cmd.MuscleGroupID
+		existing.Group = groupType
 	}
 	existing.Touch()
 
