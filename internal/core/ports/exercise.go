@@ -35,8 +35,8 @@ var (
 )
 
 type ExerciseWrite interface {
-	Add(ctx context.Context, exercise exercise.Exercise) (int, error) // return the id
-	Update(ctx context.Context, exercise exercise.Exercise) error
+	Add(ctx context.Context, exercise exercise.Exercise) (exercise.Exercise, error) // return the id
+	Update(ctx context.Context, exercise exercise.Exercise) (exercise.Exercise, error)
 	Delete(ctx context.Context, id int) error
 }
 
@@ -45,17 +45,6 @@ type ExerciseRead interface {
 	GetByName(ctx context.Context, name string) (*exercise.Exercise, error)
 	// TODO GetAll will be different since it will use the denormalized table
 	// will likely not be from here
-}
-
-type ExerciseAliasWrite interface {
-	Add(ctx context.Context, alias exercise.Alias) error
-	Update(ctx context.Context, alias exercise.Alias) error
-	Delete(ctx context.Context, id int) error
-}
-
-type ExerciseAliasRead interface {
-	GetByID(ctx context.Context, id int) (*exercise.Alias, error)
-	GetByName(ctx context.Context, name string) (*exercise.Alias, error)
 }
 
 type ExerciseEquipmentWrite interface {
@@ -86,6 +75,17 @@ type ExerciseCategoryWrite interface {
 type ExerciseCategoryRead interface {
 	GetByID(ctx context.Context, id int) (*exercise.ExerciseCategory, error)
 	GetByExerciseAndCategoryID(ctx context.Context, exerciseID, categoryID int) (*exercise.ExerciseCategory, error)
+}
+
+type ExerciseAliasWrite interface {
+	Add(ctx context.Context, alias exercise.Alias) error
+	Update(ctx context.Context, alias exercise.Alias) error
+	Delete(ctx context.Context, id int) error
+}
+
+type ExerciseAliasRead interface {
+	GetByID(ctx context.Context, id int) (*exercise.Alias, error)
+	GetByName(ctx context.Context, name string) (*exercise.Alias, error)
 }
 
 type ExerciseMediaWrite interface {
