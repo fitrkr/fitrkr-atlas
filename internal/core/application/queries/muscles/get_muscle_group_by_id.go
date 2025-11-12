@@ -8,20 +8,20 @@ import (
 	"github.com/cheezecakee/fitrkr-atlas/internal/core/ports"
 )
 
-type GetMuscleGroupByIDQuery struct {
-	ID   int `json:"id"`
-	Read ports.Read
+type GetMusclesByGroupTypeQuery struct {
+	GroupType string `json:"group_type"`
+	Read      ports.Read
 }
 
-type GetMuscleGroupByIDResp struct {
-	MuscleGroup *muscle.Group
+type GetMusclesByGroupTypeResp struct {
+	Muscle []*muscle.Muscle
 }
 
-func (qry *GetMuscleGroupByIDQuery) Handle(ctx context.Context) (any, error) {
-	mg, err := qry.Read.Muscle.Group.GetByID(ctx, qry.ID)
+func (qry *GetMusclesByGroupTypeQuery) Handle(ctx context.Context) (any, error) {
+	m, err := qry.Read.Muscle.GetByGroupType(ctx, qry.GroupType)
 	if err != nil {
-		return GetMuscleGroupByIDResp{}, fmt.Errorf("failed to get muscle group: %w", err)
+		return GetMusclesByGroupTypeResp{}, fmt.Errorf("failed to read muscles: %w", err)
 	}
 
-	return GetMuscleGroupByIDResp{MuscleGroup: mg}, nil
+	return GetMusclesByGroupTypeResp{Muscle: m}, nil
 }

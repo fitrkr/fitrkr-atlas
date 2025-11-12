@@ -1,3 +1,4 @@
+// Package muscles
 package muscles
 
 import (
@@ -20,7 +21,7 @@ type GetMuscleByIDResp struct {
 func (qry *GetMuscleByIDQuery) Handle(ctx context.Context) (any, error) {
 	m, err := qry.Read.Muscle.GetByID(ctx, qry.ID)
 	if err != nil {
-		return GetMuscleByIDResp{}, fmt.Errorf("failed to get muscle: %w", err)
+		return GetMuscleByIDResp{}, fmt.Errorf("failed to read muscle: %w", err)
 	}
 
 	return GetMuscleByIDResp{Muscle: m}, nil

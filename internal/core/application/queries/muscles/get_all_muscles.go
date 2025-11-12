@@ -19,7 +19,7 @@ type GetAllMusclesResp struct {
 func (qry *GetAllMusclesQuery) Handle(ctx context.Context) (any, error) {
 	muscles, err := qry.Read.Muscle.GetAll(ctx)
 	if err != nil {
-		return GetAllMusclesResp{}, fmt.Errorf("failed to get muscles: %w", err)
+		return GetAllMusclesResp{}, fmt.Errorf("failed to read muscles: %w", err)
 	}
 
 	return GetAllMusclesResp{Muscles: muscles}, nil
