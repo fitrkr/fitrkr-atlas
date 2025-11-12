@@ -5,6 +5,7 @@ import (
 	"github.com/cheezecakee/fitrkr-atlas/internal/core/application/queries/equipments"
 	"github.com/cheezecakee/fitrkr-atlas/internal/core/application/queries/exercises"
 	"github.com/cheezecakee/fitrkr-atlas/internal/core/application/queries/muscles"
+	"github.com/cheezecakee/fitrkr-atlas/internal/core/application/queries/view"
 )
 
 type Queries struct {
@@ -38,4 +39,8 @@ type Queries struct {
 	GetExerciseByName          *exercises.GetExerciseByNameQuery
 	GetExerciseInstructionByID *exercises.GetInstructionByIDQuery
 	GetExerciseMediaByID       *exercises.GetMediaByIDQuery
+
+	// View
+	GetViewByID *view.GetViewByIDQuery
+	GetAllView  *view.GetAllViewQuery
 }
