@@ -3,6 +3,7 @@ package category
 
 import (
 	"errors"
+	"strings"
 	"time"
 )
 
@@ -13,14 +14,18 @@ var (
 
 type Category struct {
 	ID        *int
-	Name      CategoryType
+	Name      string
+	Type      CategoryType
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
 
-func New(name CategoryType) (Category, error) {
+func New(name string, categoryType CategoryType) (Category, error) {
+	if name == "" {
+		return Category{}, ErrEmptyCategory
+	}
 	return Category{
-		Name:      name,
+		Name:      strings.TrimSpace(strings.ToLower(name)),
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
 	}, nil
