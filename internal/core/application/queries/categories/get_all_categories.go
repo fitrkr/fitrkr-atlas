@@ -20,7 +20,7 @@ type GetAllCategoriesResp struct {
 func (qry *GetAllCategoriesQuery) Handle(ctx context.Context) (any, error) {
 	categories, err := qry.Read.Category.GetAll(ctx)
 	if err != nil {
-		return GetAllCategoriesResp{}, fmt.Errorf("failed to get categories: %w", err)
+		return GetAllCategoriesResp{}, fmt.Errorf("failed to read categories: %w", err)
 	}
 
 	return GetAllCategoriesResp{Categories: categories}, nil

@@ -20,7 +20,7 @@ type GetCategoryByIDResp struct {
 func (qry *GetCategoryByIDQuery) Handle(ctx context.Context) (any, error) {
 	c, err := qry.Read.Category.GetByID(ctx, qry.ID)
 	if err != nil {
-		return GetCategoryByIDResp{}, fmt.Errorf("failed to get category: %w", err)
+		return GetCategoryByIDResp{}, fmt.Errorf("failed to read category: %w", err)
 	}
 
 	return GetCategoryByIDResp{Category: c}, nil
