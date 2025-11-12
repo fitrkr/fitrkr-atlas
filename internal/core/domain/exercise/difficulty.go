@@ -42,6 +42,6 @@ func (d Difficulty) ToString() string {
 	case ELITE:
 		return "elite"
 	default:
-		return "unknown"
+		return ""
 	}
 }

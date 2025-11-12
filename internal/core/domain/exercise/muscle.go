@@ -8,15 +8,15 @@ import (
 var ErrEmptyMuscleID = errors.New("empty muscle id")
 
 type ExerciseMuscle struct {
-	ID              *int
-	ExerciseID      int
-	MuscleID        int
-	ActivationLevel ActivationLevel
-	CreatedAt       time.Time
-	UpdatedAt       time.Time
+	ID         *int       `json:"id"`
+	ExerciseID int        `json:"exercise_id"`
+	MuscleID   int        `json:"muscle_id"`
+	Activation Activation `json:"activation"`
+	CreatedAt  time.Time  `json:"created_at"`
+	UpdatedAt  time.Time  `json:"updated_at"`
 }
 
-func NewExerciseMuscle(exerciseID, muscleID int, activationLevel ActivationLevel) (ExerciseMuscle, error) {
+func NewExerciseMuscle(exerciseID, muscleID int, activation Activation) (ExerciseMuscle, error) {
 	if exerciseID < 0 {
 		return ExerciseMuscle{}, ErrEmptyExericiseID
 	}
@@ -24,10 +24,10 @@ func NewExerciseMuscle(exerciseID, muscleID int, activationLevel ActivationLevel
 		return ExerciseMuscle{}, ErrEmptyMuscleID
 	}
 	return ExerciseMuscle{
-		ExerciseID:      exerciseID,
-		MuscleID:        muscleID,
-		ActivationLevel: activationLevel,
-		CreatedAt:       time.Now(),
-		UpdatedAt:       time.Now(),
+		ExerciseID: exerciseID,
+		MuscleID:   muscleID,
+		Activation: activation,
+		CreatedAt:  time.Now(),
+		UpdatedAt:  time.Now(),
 	}, nil
 }

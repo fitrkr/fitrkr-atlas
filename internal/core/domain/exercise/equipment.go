@@ -8,7 +8,7 @@ import (
 var ErrEmptyEquipmentID = errors.New("empty equipment id")
 
 type ExerciseEquipment struct {
-	ID           int       `json:"id"`
+	ID           int       `json:"id"` // This is the same as exercise id
 	EquipmentID  int       `json:"equipment_id"`
 	AttachmentID *int      `json:"attachment_id"`
 	CreatedAt    time.Time `json:"created_at"`

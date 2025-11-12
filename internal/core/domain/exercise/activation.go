@@ -7,7 +7,7 @@ import (
 
 var ErrInvalidActivationLevel = errors.New("invalid activation level")
 
-type ActivationLevel int
+type Activation int
 
 const (
 	PRIMARY = iota + 1
@@ -15,7 +15,7 @@ const (
 	TERTIARY
 )
 
-func NewActivationLevel(level string) (ActivationLevel, error) {
+func NewActivationLevel(level string) (Activation, error) {
 	switch strings.TrimSpace(strings.ToLower(level)) {
 	case "primary":
 		return PRIMARY, nil
@@ -28,7 +28,7 @@ func NewActivationLevel(level string) (ActivationLevel, error) {
 	}
 }
 
-func (a ActivationLevel) ToString() string {
+func (a Activation) ToString() string {
 	switch a {
 	case PRIMARY:
 		return "primary"
