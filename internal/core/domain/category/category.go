@@ -13,14 +13,19 @@ var (
 
 type Category struct {
 	ID        *int
-	Name      CategoryType
+	Name      string
+	Type      CategoryType
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
 
-func New(name CategoryType) (Category, error) {
+func New(name string, categoryType CategoryType) (Category, error) {
+	if name == "" {
+		return Category{}, ErrEmptyCategory
+	}
 	return Category{
 		Name:      name,
+		Type:      categoryType,
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
 	}, nil
