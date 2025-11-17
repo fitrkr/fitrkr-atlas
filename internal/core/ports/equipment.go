@@ -21,7 +21,7 @@ type EquipmentWrite interface {
 
 type EquipmentRead interface {
 	GetByID(ctx context.Context, id int) (*equipment.Equipment, error)
-	GetAll(ctx context.Context) ([]equipment.Equipment, error)
+	GetAll(ctx context.Context) ([]*equipment.Equipment, error)
 }
 
 type AttachmentWrite interface {
@@ -32,7 +32,7 @@ type AttachmentWrite interface {
 
 type AttachmentRead interface {
 	GetByID(ctx context.Context, id int) (*equipment.Attachment, error)
-	GetAll(ctx context.Context) ([]equipment.Attachment, error)
+	GetAll(ctx context.Context) ([]*equipment.Attachment, error)
 }
 
 type EquipmentAttachmentWrite interface {
@@ -42,5 +42,5 @@ type EquipmentAttachmentWrite interface {
 
 type EquipmentAttachmentRead interface {
 	GetByID(ctx context.Context, id int) (*equipment.EquipmentAttachment, error)
-	GetByEquipmentID(ctx context.Context, equipmentID int) ([]equipment.EquipmentAttachment, error)
+	GetByEquipmentID(ctx context.Context, equipmentID int) ([]*equipment.EquipmentAttachment, error)
 }

@@ -12,17 +12,6 @@ var (
 	ErrMuscleNotFound      = errors.New("muscle does not exist")
 )
 
-type MuscleGroupWrite interface {
-	Add(ctx context.Context, muscleGroup muscle.Group) error
-	Update(ctx context.Context, muscleGroup muscle.Group) error
-	Delete(ctx context.Context, id int) error
-}
-
-type MuscleGroupRead interface {
-	GetByID(ctx context.Context, id int) (*muscle.Group, error)
-	GetAll(ctx context.Context) ([]muscle.Group, error)
-}
-
 type MuscleWrite interface {
 	Add(ctx context.Context, muscle muscle.Muscle) error
 	Update(ctx context.Context, muscle muscle.Muscle) error
@@ -31,6 +20,6 @@ type MuscleWrite interface {
 
 type MuscleRead interface {
 	GetByID(ctx context.Context, id int) (*muscle.Muscle, error)
-	GetAll(ctx context.Context) ([]muscle.Muscle, error)
-	GetByMuscleGroupID(ctx context.Context, muscleGroupID int) ([]muscle.Muscle, error)
+	GetAll(ctx context.Context) ([]*muscle.Muscle, error)
+	GetByGroupType(ctx context.Context, muscleType string) ([]*muscle.Muscle, error)
 }

@@ -20,17 +20,6 @@ type CategoryWrite interface {
 
 type CategoryRead interface {
 	GetByID(ctx context.Context, id int) (*category.Category, error)
-	GetAll(ctx context.Context) ([]category.Category, error)
-}
-
-type SubcategoryWrite interface {
-	Add(ctx context.Context, subcategory category.Subcategory) error
-	Update(ctx context.Context, subcategory category.Subcategory) error
-	Delete(ctx context.Context, id int) error
-}
-
-type SubcategoryRead interface {
-	GetByID(ctx context.Context, id int) (*category.Subcategory, error)
-	GetAll(ctx context.Context) ([]category.Subcategory, error)
-	GetByCategoryID(ctx context.Context, categoryID int) ([]category.Subcategory, error)
+	GetAll(ctx context.Context) ([]*category.Category, error)
+	GetByType(ctx context.Context, categoryType string) ([]*category.Category, error)
 }

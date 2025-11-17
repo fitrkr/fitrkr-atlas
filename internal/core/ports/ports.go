@@ -1,19 +1,22 @@
+// Package ports
 package ports
 
 type Write struct {
 	Exercise   ExerciseWriteGroup
 	Equipment  EquipmentWriteGroup
 	Attachment AttachmentWrite
-	Muscle     MuscleWriteGroup
-	Category   CategoryWriteGroup
+	Muscle     MuscleWrite
+	Category   CategoryWrite
+	View       ViewWrite
 }
 
 type Read struct {
 	Exercise   ExerciseReadGroup
 	Equipment  EquipmentReadGroup
 	Attachment AttachmentRead
-	Muscle     MuscleReadGroup
-	Category   CategoryReadGroup
+	Muscle     MuscleRead
+	Category   CategoryRead
+	View       ViewRead
 }
 
 type EquipmentWriteGroup struct {
@@ -26,42 +29,18 @@ type EquipmentReadGroup struct {
 	Attachment EquipmentAttachmentRead
 }
 
-type MuscleReadGroup struct {
-	MuscleRead
-	Group MuscleGroupRead
-}
-
-type MuscleWriteGroup struct {
-	MuscleWrite
-	Group MuscleGroupWrite
-}
-
-type CategoryWriteGroup struct {
-	CategoryWrite
-	Subcategory SubcategoryWrite
-}
-
-type CategoryReadGroup struct {
-	CategoryRead
-	Subcategory SubcategoryRead
-}
-
 type ExerciseWriteGroup struct {
 	ExerciseWrite
-	Alias       ExerciseAliasWrite
-	Equipment   ExerciseEquipmentWrite
-	Muscle      ExerciseMuscleWrite
-	Category    ExerciseCategoryWrite
-	Media       ExerciseMediaWrite
-	Instruction ExerciseInstructionWrite
+	Alias      ExerciseAliasWrite
+	Attachment ExerciseAttachmentWrite
+	Muscle     ExerciseMuscleWrite
+	Category   ExerciseCategoryWrite
 }
 
 type ExerciseReadGroup struct {
 	ExerciseRead
-	Alias       ExerciseAliasRead
-	Equipment   ExerciseEquipmentRead
-	Muscle      ExerciseMuscleRead
-	Category    ExerciseCategoryRead
-	Media       ExerciseMediaRead
-	Instruction ExerciseInstructionRead
+	Alias      ExerciseAliasRead
+	Attachment ExerciseAttachmentRead
+	Muscle     ExerciseMuscleRead
+	Category   ExerciseCategoryRead
 }
