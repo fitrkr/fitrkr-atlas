@@ -7,31 +7,25 @@ import (
 	"time"
 )
 
-var (
-	ErrEmptyMuscle          = errors.New("empty muscle")
-	ErrInvalidMuscleGroupID = errors.New("invalid muscle group id")
-)
+var ErrEmptyMuscle = errors.New("empty muscle")
 
 type Muscle struct {
-	ID            *int
-	MuscleGroupID int
-	Name          string
-	CreatedAt     time.Time
-	UpdatedAt     time.Time
+	ID        *int
+	Group     MuscleGroup
+	Name      string
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }
 
-func New(name string, muscleGroupID int) (Muscle, error) {
+func New(name string, groupType MuscleGroup) (Muscle, error) {
 	if name == "" {
 		return Muscle{}, ErrEmptyMuscle
 	}
-	if muscleGroupID < 0 {
-		return Muscle{}, ErrInvalidMuscleGroupID
-	}
 	return Muscle{
-		Name:          strings.TrimSpace(strings.ToLower(name)),
-		MuscleGroupID: muscleGroupID,
-		CreatedAt:     time.Now(),
-		UpdatedAt:     time.Now(),
+		Name:      strings.TrimSpace(strings.ToLower(name)),
+		Group:     groupType,
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
 	}, nil
 }
 
