@@ -5,15 +5,10 @@ import (
 	"github.com/cheezecakee/logr"
 	"github.com/joho/godotenv"
 
-	"github.com/cheezecakee/fitrkr-atlas/internal/api/web"
-	"github.com/cheezecakee/fitrkr-atlas/internal/core/application"
+	"github.com/cheezecakee/fitrkr-atlas/internal/core/application/commands"
+	"github.com/cheezecakee/fitrkr-atlas/internal/core/application/mediator"
+	"github.com/cheezecakee/fitrkr-atlas/internal/core/application/queries"
 	"github.com/cheezecakee/fitrkr-atlas/internal/infrastructure/db/postgres"
-	"github.com/cheezecakee/fitrkr-atlas/internal/infrastructure/db/postgres/attachment"
-	"github.com/cheezecakee/fitrkr-atlas/internal/infrastructure/db/postgres/category"
-	"github.com/cheezecakee/fitrkr-atlas/internal/infrastructure/db/postgres/equipment"
-	"github.com/cheezecakee/fitrkr-atlas/internal/infrastructure/db/postgres/muscle"
-	"github.com/cheezecakee/fitrkr-atlas/internal/infrastructure/db/postgres/muscle_group"
-	"github.com/cheezecakee/fitrkr-atlas/internal/infrastructure/db/postgres/subcategory"
 )
 
 func main() {
@@ -26,34 +21,18 @@ func main() {
 	db := postgres.NewPostgresConn()
 	defer db.Close()
 
+	provider := postgres.NewProvider(db)
+	read, write := provider.CreatePorts()
+
+	commands.Init(write, read)
+	queries.Init(read)
+
+	registry := mediator.NewRegistry()
+	queries.RegisterAll(registry)
+	commands.RegisterAll(registry)
+
 	// Initialize with subdirectory packages
-	equipmentWriter := equipment.NewWriter(db)
-	equipmentReader := equipment.NewReader(db)
 
-	attachmentWriter := attachment.NewWriter(db)
-	attachmentReader := attachment.NewReader(db)
-
-	muscleWriter := muscle.NewWriter(db)
-	muscleReader := muscle.NewReader(db)
-
-	muscleGroupWriter := musclegroup.NewWriter(db)
-	muscleGroupReader := musclegroup.NewReader(db)
-
-	categoryWriter := category.NewWriter(db)
-	categoryReader := category.NewReader(db)
-
-	subcategoryWriter := subcategory.NewWriter(db)
-	subcategoryReader := subcategory.NewReader(db)
-
-	app := application.New(
-		equipmentWriter, equipmentReader,
-		attachmentWriter, attachmentReader,
-		muscleGroupWriter, muscleGroupReader,
-		muscleWriter, muscleReader,
-		categoryWriter, categoryReader,
-		subcategoryWriter, subcategoryReader,
-	)
-
-	httpServer := web.NewApp(app, web.WithPort(8080))
-	httpServer.Run()
+	// httpServer := web.NewApp(app, web.WithPort(8080))
+	// httpServer.Run()
 }
