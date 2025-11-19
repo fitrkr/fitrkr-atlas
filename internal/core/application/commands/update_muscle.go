@@ -24,12 +24,12 @@ func (cmd *UpdateMuscleCommand) Handle(ctx context.Context) (any, error) {
 	if cmd.Name != "" {
 		existing.Name = cmd.Name
 	}
-	if cmd.GroupType != "" && cmd.GroupType != existing.Group.ToString() {
+	if cmd.GroupType != "" && cmd.GroupType != existing.Group {
 		groupType, err := muscle.NewMuscleGroupType(cmd.GroupType)
 		if err != nil {
 			return nil, err
 		}
-		existing.Group = groupType
+		existing.Group = groupType.ToString()
 	}
 	existing.Touch()
 

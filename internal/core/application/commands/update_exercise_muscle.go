@@ -13,9 +13,9 @@ type MuscleReq struct {
 }
 
 type UpdateExerciseMuscleCommand struct {
-	Remove     []int
-	Add        []MuscleReq
-	ExerciseID int
+	Remove     []int       `json:"remove,omitempty"`
+	Add        []MuscleReq `json:"add,omitempty"`
+	ExerciseID int         `json:"exercise_id"`
 }
 
 type UpdateExerciseMuscleResp struct{}
@@ -36,7 +36,7 @@ func (cmd *UpdateExerciseMuscleCommand) Handle(ctx context.Context) (any, error)
 				return nil, fmt.Errorf("failed to create activation level: %w", err)
 			}
 
-			muscle, err := exercise.NewExerciseMuscle(cmd.ExerciseID, m.MuscleID, level)
+			muscle, err := exercise.NewExerciseMuscle(cmd.ExerciseID, m.MuscleID, level.ToString())
 			if err != nil {
 				return nil, fmt.Errorf("failed to create exercise muscle: %w", err)
 			}

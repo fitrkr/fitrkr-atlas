@@ -18,8 +18,8 @@ type Exercise struct {
 	ID          *int                  `json:"id"`
 	Name        string                `json:"name"`
 	Description *string               `json:"description"`
-	Difficulty  Difficulty            `json:"difficulty"`
-	Position    Position              `json:"position"`
+	Difficulty  string                `json:"difficulty"`
+	Position    string                `json:"position"`
 	EquipmentID *int                  `json:"equipment_id"`
 	CreatedAt   time.Time             `json:"created_at"`
 	UpdatedAt   time.Time             `json:"updated_at"`
@@ -31,7 +31,7 @@ type Exercise struct {
 	Alias       []*Alias              `json:"alias"`
 }
 
-func New(name, description string, difficulty Difficulty, position Position) (Exercise, error) {
+func New(name, description, difficulty, position string) (Exercise, error) {
 	if name == "" {
 		return Exercise{}, ErrEmptyName
 	}

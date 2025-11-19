@@ -20,7 +20,7 @@ func (cmd *CreateAttachmentCommand) Handle(ctx context.Context) (any, error) {
 		return nil, fmt.Errorf("failed to create new attachment type: %w", err)
 	}
 
-	attachment, err := equipment.NewAttachment(cmd.Name, attachmentType)
+	attachment, err := equipment.NewAttachment(cmd.Name, attachmentType.ToString())
 	if err != nil {
 		return CreateAttachmentResp{}, fmt.Errorf("failed to create new attachment: %w", err)
 	}

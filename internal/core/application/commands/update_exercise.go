@@ -10,12 +10,12 @@ import (
 )
 
 type UpdateExerciseCommand struct {
-	ID          int
-	Name        string
-	Description string
-	Difficulty  string
-	Position    string
-	EquipmentID *int
+	ID          int    `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Difficulty  string `json:"difficulty"`
+	Position    string `json:"position"`
+	EquipmentID *int   `json:"equipment_id,omitempty"`
 }
 
 type UpdateExerciseResp struct {
@@ -43,7 +43,7 @@ func (cmd *UpdateExerciseCommand) Handle(ctx context.Context) (any, error) {
 		if err != nil {
 			return UpdateExerciseResp{}, exercise.ErrInvalidDifficulty
 		}
-		exists.Difficulty = difficulty
+		exists.Difficulty = difficulty.ToString()
 	}
 
 	if cmd.Position != "" {
@@ -51,7 +51,7 @@ func (cmd *UpdateExerciseCommand) Handle(ctx context.Context) (any, error) {
 		if err != nil {
 			return CreateExerciseResp{}, exercise.ErrInvalidPosition
 		}
-		exists.Position = position
+		exists.Position = position.ToString()
 	}
 
 	// Validate equipment if provided

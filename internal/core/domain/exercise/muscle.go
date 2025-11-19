@@ -11,12 +11,12 @@ type ExerciseMuscle struct {
 	ID         *int
 	ExerciseID int
 	MuscleID   int
-	Activation Activation
+	Activation string
 	CreatedAt  time.Time
 	UpdatedAt  time.Time
 }
 
-func NewExerciseMuscle(exerciseID, muscleID int, activation Activation) (ExerciseMuscle, error) {
+func NewExerciseMuscle(exerciseID, muscleID int, activation string) (ExerciseMuscle, error) {
 	if exerciseID < 0 {
 		return ExerciseMuscle{}, ErrEmptyExericiseID
 	}

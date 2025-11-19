@@ -65,8 +65,8 @@ func NewViewBuilder(ex *exercise.Exercise) *ViewBuilder {
 			ID:          *ex.ID,
 			Name:        ex.Name,
 			Description: *ex.Description,
-			Difficulty:  ex.Difficulty.ToString(),
-			Position:    ex.Position.ToString(),
+			Difficulty:  ex.Difficulty,
+			Position:    ex.Position,
 			CreatedAt:   ex.CreatedAt,
 			UpdatedAt:   ex.UpdatedAt,
 			DeletedAt:   ex.DeletedAt,
@@ -123,7 +123,7 @@ func (cmd *BuildViewCommand) BuildEquipment(ctx context.Context, equipmentID *in
 
 			attachment := &view.Attachment{
 				Name: a.Name,
-				Type: a.Type.ToString(),
+				Type: a.Type,
 			}
 
 			attachments = append(attachments, attachment)
@@ -133,7 +133,7 @@ func (cmd *BuildViewCommand) BuildEquipment(ctx context.Context, equipmentID *in
 	eq := view.Equipment{
 		Name:        e.Name,
 		Description: *e.Description,
-		Type:        e.Type.ToString(),
+		Type:        e.Type,
 		Attachment:  attachments,
 	}
 
@@ -158,9 +158,9 @@ func (cmd *BuildViewCommand) BuildMuscle(ctx context.Context) ([]view.MuscleGrou
 		if err != nil {
 			return nil, fmt.Errorf("failed to read muscle: %w", err)
 		}
-		seen[m.Group.ToString()] = append(seen[m.Group.ToString()], view.Muscle{
+		seen[m.Group] = append(seen[m.Group], view.Muscle{
 			Name:       m.Name,
-			Activation: i.Activation.ToString(),
+			Activation: i.Activation,
 		})
 	}
 
@@ -191,7 +191,7 @@ func (cmd *BuildViewCommand) BuildCategory(ctx context.Context) ([]view.Category
 		if err != nil {
 			return nil, fmt.Errorf("failed to read category: %w", err)
 		}
-		seen[c.Type.ToString()] = append(seen[c.Type.ToString()], c.Name)
+		seen[c.Type] = append(seen[c.Type], c.Name)
 	}
 
 	for categoryType, categories := range seen {

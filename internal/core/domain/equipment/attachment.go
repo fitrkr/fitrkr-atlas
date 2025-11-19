@@ -15,12 +15,12 @@ var (
 type Attachment struct {
 	ID        *int
 	Name      string
-	Type      AttachmentType
+	Type      string
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
 
-func NewAttachment(name string, attachmentType AttachmentType) (Attachment, error) {
+func NewAttachment(name, attachmentType string) (Attachment, error) {
 	if name == "" {
 		return Attachment{}, ErrEmptyAttachment
 	}

@@ -22,7 +22,7 @@ func newViewReader(db *sql.DB) *ViewReader {
 const GetViewByID = `
 	SELECT 
 		id, name, description, difficulty, position,
-		alias, equipment, attachment, muscle, category,
+		alias, equipment, muscle, category,
 		created_at, updated_at, deleted_at, purge_at
 	FROM exercise_view
 	WHERE id = $1 AND deleted_at IS NULL
@@ -77,7 +77,7 @@ func (r *ViewReader) GetByID(ctx context.Context, id int) (*view.View, error) {
 const GetAllViews = `
 	SELECT 
 		id, name, description, difficulty, position,
-		alias, equipment, attachment, muscle, category,
+		alias, equipment, muscle, category,
 		created_at, updated_at, deleted_at, purge_at
 	FROM exercise_view
 	WHERE deleted_at IS NULL

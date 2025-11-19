@@ -27,13 +27,13 @@ func (cmd *UpdateCategoryCommand) Handle(ctx context.Context) (any, error) {
 		existing.Name = name
 	}
 
-	if cmd.Type != "" && cmd.Type != existing.Type.ToString() {
+	if cmd.Type != "" && cmd.Type != existing.Type {
 		categoryType, err := category.NewCategoryType(cmd.Type)
 		if err != nil {
 			return CreateCategoryResp{}, err
 		}
 
-		existing.Type = categoryType
+		existing.Type = categoryType.ToString()
 	}
 
 	existing.Touch()

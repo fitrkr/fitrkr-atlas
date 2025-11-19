@@ -32,7 +32,7 @@ func (cmd *UpdateAttachmentCommand) Handle(ctx context.Context) (any, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to create attachment type: %w", err)
 		}
-		existing.Type = attachmentType
+		existing.Type = attachmentType.ToString()
 	}
 
 	existing.Touch()

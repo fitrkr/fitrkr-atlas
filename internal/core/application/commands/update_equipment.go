@@ -35,7 +35,7 @@ func (cmd *UpdateEquipmentCommand) Handle(ctx context.Context) (any, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to create a new equipment type: %w", err)
 		}
-		existing.Type = equipmentType
+		existing.Type = equipmentType.ToString()
 	}
 
 	existing.Touch()

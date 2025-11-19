@@ -11,13 +11,13 @@ var ErrEmptyMuscle = errors.New("empty muscle")
 
 type Muscle struct {
 	ID        *int
-	Group     MuscleGroup
+	Group     string
 	Name      string
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
 
-func New(name string, groupType MuscleGroup) (Muscle, error) {
+func New(name, groupType string) (Muscle, error) {
 	if name == "" {
 		return Muscle{}, ErrEmptyMuscle
 	}

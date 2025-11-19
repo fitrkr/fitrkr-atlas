@@ -20,7 +20,7 @@ func (cmd *CreateCategoryCommand) Handle(ctx context.Context) (any, error) {
 		return CreateCategoryResp{}, err
 	}
 
-	c, err := category.New(cmd.Name, categoryType)
+	c, err := category.New(cmd.Name, categoryType.ToString())
 	if err != nil {
 		return CreateCategoryResp{}, fmt.Errorf("failed to create new category: %w", err)
 	}

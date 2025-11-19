@@ -8,9 +8,9 @@ import (
 )
 
 type UpdateAliasCommand struct {
-	Remove     []int
-	Add        []exercise.Alias
-	ExerciseID int
+	Remove     []int            `json:"remove,omitempty"`
+	Add        []exercise.Alias `json:"add,omitempty"`
+	ExerciseID int              `json:"exercise_id"`
 }
 
 type UpdateAliasResp struct{}

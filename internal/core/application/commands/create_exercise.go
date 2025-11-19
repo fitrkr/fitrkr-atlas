@@ -15,7 +15,7 @@ type CreateExerciseCommand struct {
 	Difficulty  string `json:"difficulty"`
 	Position    string `json:"position"`
 	Type        string `json:"type"`
-	EquipmentID *int   `json:"equipment_id"`
+	EquipmentID *int   `json:"equipment_id,omitempty"`
 }
 
 type CreateExerciseResp struct {
@@ -42,7 +42,7 @@ func (cmd *CreateExerciseCommand) Handle(ctx context.Context) (any, error) {
 	}
 
 	// Create Exercise
-	ex, err := exercise.New(name, cmd.Description, difficulty, position)
+	ex, err := exercise.New(name, cmd.Description, difficulty.ToString(), position.ToString())
 	if err != nil {
 		return CreateExerciseResp{}, fmt.Errorf("failed to create new exercise: %w", err)
 	}

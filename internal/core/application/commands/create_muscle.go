@@ -20,7 +20,7 @@ func (cmd *CreateMuscleCommand) Handle(ctx context.Context) (any, error) {
 		return nil, err
 	}
 
-	m, err := muscle.New(cmd.Name, groupType)
+	m, err := muscle.New(cmd.Name, groupType.ToString())
 	if err != nil {
 		return CreateMuscleResp{}, fmt.Errorf("failed to create new muscle: %w", err)
 	}

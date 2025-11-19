@@ -8,9 +8,9 @@ import (
 )
 
 type UpdateExerciseCategoryCommand struct {
-	Remove     []int
-	Add        []int // category_ids
-	ExerciseID int
+	Remove     []int `json:"remove,omitempty"`
+	Add        []int `json:"add,omitempty"` // category_ids
+	ExerciseID int   `json:"exercise_id"`
 }
 
 type UpdateExerciseCategoryResp struct{}
