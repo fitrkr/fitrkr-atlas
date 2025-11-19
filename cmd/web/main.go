@@ -5,6 +5,7 @@ import (
 	"github.com/cheezecakee/logr"
 	"github.com/joho/godotenv"
 
+	"github.com/cheezecakee/fitrkr-atlas/internal/api/web"
 	"github.com/cheezecakee/fitrkr-atlas/internal/core/application/commands"
 	"github.com/cheezecakee/fitrkr-atlas/internal/core/application/mediator"
 	"github.com/cheezecakee/fitrkr-atlas/internal/core/application/queries"
@@ -32,7 +33,6 @@ func main() {
 	commands.RegisterAll(registry)
 
 	// Initialize with subdirectory packages
-
-	// httpServer := web.NewApp(app, web.WithPort(8080))
-	// httpServer.Run()
+	httpServer := web.NewApp(registry, web.WithPort(8080))
+	httpServer.Run()
 }
