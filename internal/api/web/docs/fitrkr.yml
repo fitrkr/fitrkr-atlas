@@ -1,0 +1,1452 @@
+openapi: 3.1.0
+info:
+  title: Fitrkr Atlas
+  description: Database for exercises database management
+  version: 0.1.0
+servers:
+  - url: http://localhost:8080/api/v1
+    description: Local development server
+
+paths:
+  /equipment:
+    post:
+      summary: Create equipment
+      operationId: equipment
+      tags:
+        - Equipment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Barbell" 
+                description:
+                  type: string
+                  example: "Olympic barbell for strength training"
+                type:
+                  type: string
+                  example: "free_weight"
+                attachment:
+                  type: array
+                  items:
+                    type: integer
+              required:
+                - name
+                - type
+      responses:
+        '201':
+          description: Equipment created successfully
+        '400':
+          description: Bad request - Invalid input data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Conflict - Name already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      summary: Update equipment
+      operationId: updateEquipment
+      tags:
+        - Equipment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: number
+                name:
+                  type: string
+                description:
+                  type: string
+                type:
+                  type: string
+                  example: "body_weight"
+              required:
+                - id
+      responses:
+        '200':
+          description: Equipment updated successfully
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Equipment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    get:
+      summary: Get all equipments 
+      operationId: getAllEquipments
+      tags:
+        - Equipment
+      responses:
+        '200':
+          description: equipment found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Equipment'
+        '404':
+          description: Equipment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /equipment/{id}:
+    get:
+      summary: Get equipment by id 
+      operationId: getEquipmentByID
+      tags:
+        - Equipment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID
+      responses:
+        '200':
+          description: equipment found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Equipment'
+        '404':
+          description: Equipment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      summary: Delete equipment
+      operationId: deleteEquipment
+      tags:
+        - Equipment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Equipment deleted successfully
+        '404':
+          description: Equipment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /attachment:
+    post:
+      summary: Create attachment
+      operationId: attachment
+      tags:
+        - Attachment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  nullable: true
+                  example: "Long Bar"
+                type: 
+                  type: string
+                  example: "cable"
+              required:
+                - name
+                - type
+      responses:
+        '201':
+          description: Attachment created successfully
+        '400':
+          description: Bad request - Invalid input data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Conflict - Name already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      summary: Update attachment
+      operationId: updateAttachment
+      tags:
+        - Attachment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: number
+                name:
+                  type: string
+                  example: "Long Bar"
+                type: 
+                  type: string
+                  example: "cable"
+              required:
+                - id
+      responses:
+        '200':
+          description: Attachment updated successfully
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Attachment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    get:
+      summary: Get all attachments 
+      operationId: getAllAttachments
+      tags:
+        - Attachment
+      responses:
+        '200':
+          description: attachment found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Attachment'
+        '404':
+          description: Attachment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /attachment/{id}:
+    get:
+      summary: Get attachment by id 
+      operationId: getAttachmentByID
+      tags:
+        - Attachment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID
+      responses:
+        '200':
+          description: attachment found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attachment'
+        '404':
+          description: Attachment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      summary: Delete attachment
+      operationId: deleteAttachment
+      tags:
+        - Attachment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Attachment deleted successfully
+        '404':
+          description: Attachment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /muscle:
+    post:
+      summary: Create muscle
+      operationId: muscle
+      tags:
+        - Muscle
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Pectoralis Major" 
+                group_type:
+                  type: string
+                  example: "chest"
+              required:
+                - name
+                - group_type
+      responses:
+        '201':
+          description: Muscle created successfully
+        '400':
+          description: Bad request - Invalid input data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Conflict - Name already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      summary: Update muscle
+      operationId: updateMuscle
+      tags:
+        - Muscle
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: number
+                name:
+                  type: string
+                  example: "Pectoralis Major" 
+                group_type:
+                  type: string
+                  example: "chest"
+              required:
+                - id
+      responses:
+        '200':
+          description: Muscle updated successfully
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Muscle not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    get:
+      summary: Get all muscles
+      operationId: getAllMuscles
+      tags:
+        - Muscle
+      responses:
+        '200':
+          description: muscle found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Muscle'
+        '404':
+          description: Muscle not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /muscle/{id}:
+    get:
+      summary: Get muscle by id 
+      operationId: getMuscleByID
+      tags:
+        - Muscle
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID
+      responses:
+        '200':
+          description: muscle found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Muscle'
+        '404':
+          description: Muscle not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      summary: Delete muscle
+      operationId: deleteMuscle
+      tags:
+        - Muscle
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Muscle deleted successfully
+        '404':
+          description: Muscle not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /muscle/group/{type}:
+    get:
+      summary: Get muscles by group type
+      operationId: getMusclesByGroupType
+      tags:
+        - Muscle
+      parameters:
+        - name: type
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Muscle group type
+      responses:
+        '200':
+          description: muscle found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Muscle'
+        '404':
+          description: Muscle not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /category:
+    post:
+      summary: Create category
+      operationId: Category
+      tags:
+        - Category
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Body Weight"
+                type: 
+                  type: string
+                  example: "strength"
+              required:
+                - name
+                - type
+      responses:
+        '201':
+          description: category created successfully
+        '400':
+          description: Bad request - Invalid input data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Conflict - Name already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      summary: Update category
+      operationId: updateCategory
+      tags:
+        - Category
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: number
+                name:
+                  type: string
+                  example: "HIIT"
+                type: 
+                  type: string
+                  example: "cardio"
+              required:
+                - id
+      responses:
+        '200':
+          description: category updated successfully
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: category not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    get:
+      summary: Get all categories
+      operationId: getAllCategories
+      tags:
+        - Category
+      responses:
+        '200':
+          description: category found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+        '404':
+          description: category not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /category/{id}:
+    get:
+      summary: Get category by id 
+      operationId: getCategoryByID
+      tags:
+        - Category
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID
+      responses:
+        '200':
+          description: category found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        '404':
+          description: category not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      summary: Delete category
+      operationId: deleteCategory
+      tags:
+        - Category
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: category deleted successfully
+        '404':
+          description: category not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /category/type/{type}:
+    get:
+      summary: Get categories by group type
+      operationId: getCategoriesByGroupType
+      tags:
+        - Category
+      parameters:
+        - name: type
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Category group type
+      responses:
+        '200':
+          description: category found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+        '404':
+          description: Category not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /exercise:
+    post:
+      summary: Create Exercise
+      operationId: createExercise
+      tags:
+        - Exercise
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Barbell Bench Press"
+                description:
+                  type: string
+                  example: "A compound pushing exercise for the chest"
+                difficulty:
+                  type: string
+                  example: "intermediate"
+                  enum: [beginner, intermediate, advanced]
+                position:
+                  type: string
+                  example: "supine"
+                  enum: [standing, sitting, supine, prone, kneeling]
+                type:
+                  type: string
+                  example: "strength"
+                equipment_id:
+                  type: integer
+                  nullable: true
+                  example: 1
+              required:
+                - name
+                - description
+                - difficulty
+                - position
+                - type
+      responses:
+        '201':
+          description: Exercise created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  exercise_id:
+                    type: integer
+                    example: 42
+        '400':
+          description: Bad request - Invalid input data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Conflict - Exercise already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
+    put:
+      summary: Update Exercise
+      operationId: updateExercise
+      tags:
+        - Exercise
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+                  example: "Modified Bench Press"
+                description:
+                  type: string
+                difficulty:
+                  type: string
+                position:
+                  type: string
+                type:
+                  type: string
+                equipment_id:
+                  type: integer
+                  nullable: true
+              required:
+                - id
+      responses:
+        '200':
+          description: Exercise updated successfully
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Exercise not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
+    get:
+      summary: Get all exercises
+      operationId: getAllExercises
+      tags:
+        - Exercise
+      responses:
+        '200':
+          description: List of exercises
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Exercise'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /exercise/{id}:
+    get:
+      summary: Get exercise by ID
+      operationId: getExerciseByID
+      tags:
+        - Exercise
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Exercise ID
+      responses:
+        '200':
+          description: Exercise found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exercise'
+        '404':
+          description: Exercise not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
+    delete:
+      summary: Delete exercise
+      operationId: deleteExercise
+      tags:
+        - Exercise
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Exercise deleted successfully
+        '404':
+          description: Exercise not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /exercise/name/{name}:
+    get:
+      summary: Get exercise by name
+      operationId: getExerciseByName
+      tags:
+        - Exercise
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Exercise name
+      responses:
+        '200':
+          description: Exercise found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exercise'
+        '404':
+          description: Exercise not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /view:
+    get:
+      summary: Get all exercise view 
+      operationId: getAllView
+      tags:
+        - View
+      responses:
+        '200':
+          description: exercise found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/View'
+        '404':
+          description: View not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'  
+  /view/{id}:
+    get:
+      summary: Get view by id 
+      operationId: getViewByID
+      tags:
+        - View
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID
+      responses:
+        '200':
+          description: view found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/View'
+        '404':
+          description: View not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    Equipment:
+      type: object
+      properties:
+        id:
+          type: integer
+          nullable: true
+          example: 1
+        name:
+          type: string
+          nullable: false
+          example: "Barbell"
+        description:
+          type: string
+          nullable: true
+          example: "Olympic barbell"
+        type: 
+          type: string
+          example: "free_weight"
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-01-15T10:30:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2025-01-15T10:30:00Z"
+    Attachment:
+      type: object
+      properties:
+        id:
+          type: integer
+          nullable: true
+          example: 1
+        name:
+          type: string
+          nullable: true
+          example: "Long Bar"
+        type: 
+          type: string
+          example: "cable"
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-01-15T10:30:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2025-01-15T10:30:00Z"
+    EquipmentAttachment:
+      type: object
+      properties:
+        id:
+          type: integer
+          nullable: true
+          example: 1
+        equipmentID:
+          type: integer
+          example: 2
+        attachmentID:
+          type: integer
+          example: 3
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-01-15T10:30:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2025-01-15T10:30:00Z"
+    Muscle:
+      type: object
+      properties:
+        id:
+          type: integer
+          nullable: true
+          example: 1
+        group:
+          type: string
+          example: "chest"
+        name:
+          type: string
+          example: "Pectoralis Major"
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-01-15T10:30:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2025-01-15T10:30:00Z"
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          nullable: true
+          example: 1
+        name:
+          type: string
+          example: "Body Weight"
+        type: 
+          type: string
+          example: "strength"
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-01-15T10:30:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2025-01-15T10:30:00Z"
+    Exercise:
+      type: object
+      properties:
+        id:
+          type: integer
+          nullable: true
+          example: 1
+        name:
+          type: string
+          example: "Bodyweight"
+        description:
+          type: string
+          nullable: true
+          example: "Weighted Pull Up"
+        difficulty:
+          type: string
+          example: "intermediate"
+        position:
+          type: string
+          example: "standing"
+        equipmentID:
+          type: integer
+          example: 2
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-01-15T10:30:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2025-01-15T10:30:00Z"
+        deleted_at:
+          type: string
+          nullable: true
+          format: date-time
+          example: "2025-01-15T10:30:00Z"
+        purge_at:
+          type: string
+          nullable: true
+          format: date-time
+          example: "2025-01-15T10:30:00Z"
+        alias:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/ExerciseAlias'
+        attachment:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/ExerciseAttachment'
+        muscle:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/ExerciseMuscle'
+        category:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/ExerciseCategory'
+    ExerciseAlias:
+      type: object
+      properties:
+        id:
+          type: integer
+          nullable: true
+          example: 1
+        exerciseID:
+          type: integer
+          example: 2
+        name:
+          type: string
+          example: ""
+        language_code:
+          type: string
+          example: "en"
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-01-15T10:30:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2025-01-15T10:30:00Z"
+    ExerciseMuscle:
+      type: object
+      properties:
+        id:
+          type: integer
+          nullable: true
+          example: 1
+        exerciseID:
+          type: integer
+          example: 2
+        muscleID:
+          type: integer
+          example: 2
+        activation:
+          type: string
+          example: "primary"
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-01-15T10:30:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2025-01-15T10:30:00Z"
+    ExerciseAttachment:
+      type: object
+      properties:
+        id:
+          type: integer
+          nullable: true
+          example: 1
+        exerciseID:
+          type: integer
+          example: 2
+        attachmentID:
+          type: integer
+          example: 2
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-01-15T10:30:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2025-01-15T10:30:00Z"
+    ExerciseCategory:
+      type: object
+      properties:
+        id:
+          type: integer
+          nullable: true
+          example: 1
+        exerciseID:
+          type: integer
+          example: 2
+        categoryID:
+          type: integer
+          example: 2
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-01-15T10:30:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2025-01-15T10:30:00Z"
+    ViewMuscle:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+          example: "Long Bar"
+        activation: 
+          type: string
+          example: "primary"
+    ViewMuscleGroup:
+      type: object
+      properties:
+        group:
+          type: string
+          example: "chest"
+        muscle: 
+          type: array
+          items:
+            $ref: '#/components/schemas/ViewMuscle'
+    ViewCategory:
+      type: object
+      properties:
+        type:
+          type: string
+          example: "strength"
+        name: 
+          type: array
+          items: 
+            type: string
+    ViewAttachment:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+          example: "Long Bar"
+        type: 
+          type: string
+          example: "cable"
+    ViewEquipment:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: false
+          example: "Barbell"
+        description:
+          type: string
+          nullable: true
+          example: "Olympic barbell"
+        type: 
+          type: string
+          example: "free_weight"
+        attachment:
+          type: array
+          items:
+            $ref: '#/components/schemas/ViewAttachment'
+    View:
+      type: object
+      properties:
+        id:
+          type: integer
+          nullable: true
+          example: 1
+        name:
+          type: string
+          example: "Bodyweight"
+        description:
+          type: string
+          nullable: true
+          example: "Weighted Pull Up"
+        difficulty:
+          type: string
+          example: "intermediate"
+        position:
+          type: string
+          example: "standing"
+        alias:
+          type: array
+          items:
+            type: string
+        equipment:
+          $ref: '#/components/schemas/ViewEquipment'
+        muscle:
+          type: array
+          items:
+            $ref: '#/components/schemas/ViewMuscleGroup'
+        category:
+          type: array
+          items:
+            $ref: '#/components/schemas/ViewCategory'
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-01-15T10:30:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2025-01-15T10:30:00Z"
+        deleted_at:
+          type: string
+          nullable: true
+          format: date-time
+          example: "2025-01-15T10:30:00Z"
+        purge_at:
+          type: string
+          nullable: true
+          format: date-time
+          example: "2025-01-15T10:30:00Z"
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Invalid request parameters"
+        code:
+          type: string
+          example: "INVALID_INPUT"
+      required:
+        - error
