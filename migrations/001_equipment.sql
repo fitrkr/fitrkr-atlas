@@ -24,7 +24,7 @@ CREATE TABLE equipment_attachment (
     equipment_id INT NOT NULL REFERENCES equipment(id) ON DELETE RESTRICT,
     attachment_id INT NOT NULL REFERENCES attachment(id) ON DELETE RESTRICT,
     created_at TIMESTAMP,
-    updated_at TIMESTAMP 
+    updated_at TIMESTAMP,
     UNIQUE(equipment_id, attachment_id)
 );
 

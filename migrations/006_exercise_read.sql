@@ -18,5 +18,3 @@ CREATE TABLE exercise_view (
 
 -- +goose Down
 DROP TABLE IF EXISTS exercise_view;
-
-

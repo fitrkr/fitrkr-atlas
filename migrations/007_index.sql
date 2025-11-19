@@ -8,9 +8,6 @@ CREATE INDEX idx_exercise_difficulty ON exercise(difficulty);
 CREATE INDEX idx_exercise_muscle_exercise_id ON exercise_muscle(exercise_id);
 CREATE INDEX idx_exercise_muscle_muscle_id ON exercise_muscle(muscle_id);
 
-CREATE INDEX idx_exercise_equipment_id ON exercise_equipment(id);
-CREATE INDEX idx_exercise_equipment_equipment_id ON exercise_equipment(equipment_id);
-
 CREATE INDEX idx_exercise_attachment_id ON exercise_attachment(id);
 CREATE INDEX idx_exercise_attachment_attachment_id ON exercise_attachment(attachment_id);
 
@@ -26,8 +23,6 @@ DROP INDEX IF EXISTS idx_exercise_name;
 DROP INDEX IF EXISTS idx_exercise_difficulty;
 DROP INDEX IF EXISTS idx_exercise_muscle_exercise_id;
 DROP INDEX IF EXISTS idx_exercise_muscle_muscle_id;
-DROP INDEX IF EXISTS idx_exercise_equipment_id;
-DROP INDEX IF EXISTS idx_exercise_equipment_equipment_id;
 DROP INDEX IF EXISTS idx_exercise_attachment_id;
 DROP INDEX IF EXISTS idx_exercise_attachment_attachment_id;
 DROP INDEX IF EXISTS idx_exercise_category_exercise_id;

@@ -22,13 +22,6 @@ CREATE TABLE exercise_muscle (
     UNIQUE(exercise_id, muscle_id)
 );
 
-CREATE TABLE exercise_equipment (
-    id INT PRIMARY KEY REFERENCES exercise(id) ON DELETE CASCADE,
-    equipment_id INT NOT NULL REFERENCES equipment(id) ON DELETE RESTRICT,
-    created_at TIMESTAMP, 
-    updated_at TIMESTAMP 
-);
-
 CREATE TABLE exercise_attachment (
     id SERIAL PRIMARY KEY,
     exercise_id INT NOT NULL REFERENCES exercise(id) ON DELETE CASCADE,
