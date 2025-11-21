@@ -6,8 +6,6 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/cheezecakee/logr"
-
 	"github.com/cheezecakee/fitrkr-atlas/internal/core/application/mediator"
 	"github.com/cheezecakee/fitrkr-atlas/pkg/web"
 )
@@ -30,7 +28,6 @@ func (h *Registry) ExecuteCommand(cmd mediator.Handler, hasBody bool, w http.Res
 	if hasBody {
 		if err := json.NewDecoder(r.Body).Decode(cmd); err != nil {
 			web.ClientError(w, http.StatusBadRequest)
-			logr.Get().Debugf("failed to decode command: %s", err)
 			return err
 		}
 	}
@@ -56,23 +53,29 @@ func (h *Registry) ExecuteQuery(qry Handler, w http.ResponseWriter, r *http.Requ
 	return nil
 }
 
-func (h *Registry) CommandChain(w http.ResponseWriter, r *http.Request, cmds []mediator.Handler) error {
-	for _, cmd := range cmds {
-		_, err := h.bus.Send(r.Context(), cmd)
-		if err != nil {
-			web.ServerError(w, err)
-			return err
-		}
+func (h *Registry) DecodeCommand(w http.ResponseWriter, r *http.Request, req any) (any, error) {
+	err := json.NewDecoder(r.Body).Decode(req)
+	if err != nil {
+		web.ClientError(w, http.StatusBadRequest)
+		return nil, err
 	}
-	return nil
+
+	return req, nil
 }
 
-func (h *Registry) ExecuteCommandSequence(ctx context.Context, cmds []mediator.Handler) (lastResp any, err error) {
-	for _, cmd := range cmds {
-		lastResp, err = h.bus.Send(ctx, cmd)
-		if err != nil {
-			return nil, err
-		}
+// first one is the command chain head
+
+func (h *Registry) GetResp(w http.ResponseWriter, r *http.Request, cmd mediator.Handler) (any, error) {
+	if err := json.NewDecoder(r.Body).Decode(cmd); err != nil {
+		web.ClientError(w, http.StatusBadRequest)
+		return nil, err
 	}
-	return lastResp, nil
+
+	resp, err := h.bus.Send(r.Context(), cmd)
+	if err != nil {
+		web.ServerError(w, err)
+		return nil, err
+	}
+
+	return resp, nil
 }
