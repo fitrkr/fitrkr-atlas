@@ -9,12 +9,12 @@ import (
 var ErrEmptyAliasName = errors.New("empty alias name")
 
 type Alias struct {
-	ID           *int
-	ExerciseID   int
-	Name         string
-	LanguageCode string // TODO Make a type for it
-	CreatedAt    time.Time
-	UpdatedAt    time.Time
+	ID           *int      `json:"id"`
+	ExerciseID   int       `json:"exercise_id"`
+	Name         string    `json:"name"`
+	LanguageCode string    `json:"language_code"` // TODO Make a type for it
+	CreatedAt    time.Time `json:"created_at"`
+	UpdatedAt    time.Time `json:"updated_at"`
 }
 
 func NewAlias(exerciseID int, name string, languageCode string) (Alias, error) {
