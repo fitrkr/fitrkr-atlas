@@ -186,7 +186,49 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
+  /equipment/attachment:
+    post:
+      summary: Create equipment attachment
+      operationId: equipmentAttachment
+      tags:
+        - EquipmentAttachment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                equipment_id:
+                  type: integer
+                  example: 1
+                attachment_id:                
+                  type: integer
+                  example: 1
+              required:
+                - equipment_id
+                - attachment_id
+      responses:
+        '201':
+          description: Equipment attachment created successfully
+        '400':
+          description: Bad request - Invalid input data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Conflict - Connection already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /attachment:
     post:
       summary: Create attachment
@@ -803,6 +845,24 @@ paths:
                   type: integer
                   nullable: true
                   example: 1
+                aliases:
+                  nullable: true
+                  $ref: '#/components/schemas/CreateExerciseAlias'
+                muscles:
+                  nullable: true
+                  $ref: '#/components/schemas/CreateExerciseMuscle'
+                categories:
+                  type: array
+                  nullable: true
+                  items:
+                    type: integer
+                  example: [2]
+                attachments:
+                  type: array
+                  nullable: true
+                  items:
+                    type: integer
+                  example: [1]
               required:
                 - name
                 - description
@@ -855,18 +915,42 @@ paths:
                   type: integer
                 name:
                   type: string
-                  example: "Modified Bench Press"
+                  nullable: true
+                  example: "Barbell Bench Press"
                 description:
                   type: string
+                  nullable: true
+                  example: "A compound pushing exercise for the chest"
                 difficulty:
                   type: string
+                  nullable: true
+                  example: "intermediate"
+                  enum: [beginner, intermediate, advanced]
                 position:
                   type: string
+                  nullable: true
+                  example: "supine"
+                  enum: [standing, sitting, supine, prone, kneeling]
                 type:
                   type: string
+                  nullable: true
+                  example: "strength"
                 equipment_id:
                   type: integer
                   nullable: true
+                  example: 1
+                aliases:
+                  nullable: true
+                  $ref: '#/components/schemas/UpdateExerciseAlias'
+                muscles:
+                  nullable: true
+                  $ref: '#/components/schemas/UpdateExerciseMuscle'
+                categories:
+                  nullable: true
+                  $ref: '#/components/schemas/UpdateExerciseCategory'
+                attachments:
+                  nullable: true
+                  $ref: '#/components/schemas/UpdateExerciseCategory'
               required:
                 - id
       responses:
@@ -890,28 +974,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-                
-    get:
-      summary: Get all exercises
-      operationId: getAllExercises
-      tags:
-        - Exercise
-      responses:
-        '200':
-          description: List of exercises
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Exercise'
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-
   /exercise/{id}:
     get:
       summary: Get exercise by ID
@@ -1439,6 +1501,81 @@ components:
           nullable: true
           format: date-time
           example: "2025-01-15T10:30:00Z"
+    AddAlias:
+      type: object
+      properties:
+        name:
+            type: string
+        language_code:
+            type: string
+            example: "en"
+    CreateExerciseAlias:
+      type: object
+      properties:
+        add:
+            type: array
+            items:
+              $ref: '#/components/schemas/AddAlias'
+    UpdateExerciseAlias:
+      type: object
+      properties:
+        add:
+            type: array
+            items:
+              $ref: '#/components/schemas/AddAlias'
+        remove:
+            type: array
+            items:
+              type: integer
+    AddMuscle:
+      type: object
+      properties:
+        muscle_id:
+            type: string
+            example: 1
+        activation:
+            type: string
+            example: "primary"
+    CreateExerciseMuscle:
+      type: object
+      properties:
+        add:
+            type: array
+            items:
+              $ref: '#/components/schemas/AddMuscle'
+    UpdateExerciseMuscle:
+      type: object
+      properties:
+        add:
+            type: array
+            items:
+              $ref: '#/components/schemas/AddMuscle'
+        remove:
+            type: array
+            items:
+              type: integer
+    UpdateExerciseCategory:
+      type: object
+      properties:
+        add:
+            type: array
+            items:
+              type: integer
+        remove:
+            type: array
+            items:
+              type: integer
+    UpdateExerciseAttachment:
+      type: object
+      properties:
+        add:
+            type: array
+            items:
+              type: integer  
+        remove:
+            type: array
+            items:
+              type: integer
     Error:
       type: object
       properties:
