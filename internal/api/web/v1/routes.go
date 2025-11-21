@@ -40,6 +40,7 @@ func SetupEquipmentRoutes(h *handlers.Registry) http.Handler {
 	r.Delete("/{id}", h.DeleteEquipment)
 
 	r.Route("/attachment", func(r chi.Router) {
+		r.Post("/", h.CreateEquipmentAttachment)
 	})
 
 	return r
