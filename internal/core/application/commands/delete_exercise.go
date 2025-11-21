@@ -19,7 +19,7 @@ func (cmd *DeleteExerciseCommand) Handle(ctx context.Context) (any, error) {
 		if err == ports.ErrExerciseNotFound {
 			return DeleteExerciseResp{}, ports.ErrExerciseNotFound
 		}
-		return DeleteExerciseResp{}, fmt.Errorf("failed to delete muscle: %w", err)
+		return DeleteExerciseResp{}, fmt.Errorf("failed to delete exercise: %w", err)
 	}
 
 	return DeleteExerciseResp{}, nil

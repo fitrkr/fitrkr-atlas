@@ -7,11 +7,6 @@ import (
 	"github.com/cheezecakee/fitrkr-atlas/internal/core/domain/exercise"
 )
 
-type MuscleReq struct {
-	MuscleID   int    `json:"muscle_id"`
-	Activation string `json:"activation"`
-}
-
 type UpdateExerciseMuscleCommand struct {
 	Remove     []int       `json:"remove,omitempty"`
 	Add        []MuscleReq `json:"add,omitempty"`
