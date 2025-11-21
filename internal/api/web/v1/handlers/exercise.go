@@ -13,12 +13,32 @@ import (
 
 func (h *Registry) CreateExercise(w http.ResponseWriter, r *http.Request) {
 	cmd := &commands.CreateExerciseCommand{}
-	h.ExecuteCommand(cmd, true, w, r)
+	resp, err := h.GetResp(w, r, cmd)
+	if err != nil {
+		web.ServerError(w, err)
+		return
+	}
+
+	exerciseID := resp.(commands.CreateExerciseResp).ID
+
+	cmdView := &commands.BuildViewCommand{ExerciseID: exerciseID}
+
+	h.ExecuteCommand(cmdView, false, w, r)
 }
 
 func (h *Registry) UpdateExercise(w http.ResponseWriter, r *http.Request) {
 	cmd := &commands.UpdateExerciseCommand{}
-	h.ExecuteCommand(cmd, true, w, r)
+	resp, err := h.GetResp(w, r, cmd)
+	if err != nil {
+		web.ServerError(w, err)
+		return
+	}
+
+	exerciseID := resp.(commands.UpdateExerciseResp).Exercise.ID
+
+	cmdView := &commands.BuildViewCommand{ExerciseID: *exerciseID}
+
+	h.ExecuteCommand(cmdView, false, w, r)
 }
 
 func (h *Registry) DeleteExercise(w http.ResponseWriter, r *http.Request) {
@@ -29,7 +49,7 @@ func (h *Registry) DeleteExercise(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	cmd := &commands.DeleteCategoryCommand{
+	cmd := &commands.DeleteExerciseCommand{
 		ID: id,
 	}
 	h.ExecuteCommand(cmd, false, w, r)

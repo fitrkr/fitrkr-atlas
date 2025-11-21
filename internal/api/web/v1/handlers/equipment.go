@@ -16,6 +16,11 @@ func (h *Registry) CreateEquipment(w http.ResponseWriter, r *http.Request) {
 	h.ExecuteCommand(cmd, true, w, r)
 }
 
+func (h *Registry) CreateEquipmentAttachment(w http.ResponseWriter, r *http.Request) {
+	cmd := &commands.CreateEquipmentAttachmentCommand{}
+	h.ExecuteCommand(cmd, true, w, r)
+}
+
 func (h *Registry) UpdateEquipment(w http.ResponseWriter, r *http.Request) {
 	cmd := &commands.UpdateEquipmentCommand{}
 	h.ExecuteCommand(cmd, true, w, r)
