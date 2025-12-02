@@ -16,7 +16,7 @@ func NewAttachmentType(equipmentType string) (AttachmentType, error) {
 		return Band, nil
 	case "cable":
 		return Cable, nil
-	case "weight":
+	case "plate":
 		return Plate, nil
 	default:
 		return 0, ErrInvalidAttachmentType
@@ -30,7 +30,7 @@ func (a AttachmentType) ToString() string {
 	case Cable:
 		return "cable"
 	case Plate:
-		return "weight"
+		return "plate"
 	default:
 		return ""
 	}
