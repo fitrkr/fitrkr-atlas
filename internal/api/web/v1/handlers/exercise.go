@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/cheezecakee/logr"
 	"github.com/go-chi/chi/v5"
 
 	"github.com/cheezecakee/fitrkr-atlas/internal/core/application/commands"
@@ -21,7 +22,7 @@ func (h *Registry) CreateExercise(w http.ResponseWriter, r *http.Request) {
 
 	exerciseID := resp.(commands.CreateExerciseResp).ID
 
-	cmdView := &commands.BuildViewCommand{ExerciseID: exerciseID}
+	cmdView := &commands.BuildViewCommand{ExerciseID: exerciseID, Create: true}
 
 	h.ExecuteCommand(cmdView, false, w, r)
 }
@@ -34,9 +35,10 @@ func (h *Registry) UpdateExercise(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	exerciseID := resp.(commands.UpdateExerciseResp).Exercise.ID
+	exercise := resp.(commands.UpdateExerciseResp).Exercise
+	logr.Get().Infof("updated Exercise: %v", exercise)
 
-	cmdView := &commands.BuildViewCommand{ExerciseID: *exerciseID}
+	cmdView := &commands.BuildViewCommand{ExerciseID: *exercise.ID, Create: false}
 
 	h.ExecuteCommand(cmdView, false, w, r)
 }
