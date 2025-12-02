@@ -6,7 +6,7 @@ import (
 	"context"
 	"errors"
 
-	"github.com/cheezecakee/fitrkr/atlas/internal/core/domain/exercise"
+	"github.com/fitrkr/atlas/internal/core/domain/exercise"
 )
 
 var (

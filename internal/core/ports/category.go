@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 
-	"github.com/cheezecakee/fitrkr/atlas/internal/core/domain/category"
+	"github.com/fitrkr/atlas/internal/core/domain/category"
 )
 
 var (

@@ -4,8 +4,8 @@ import (
 	"context"
 	"database/sql"
 
-	"github.com/cheezecakee/fitrkr/atlas/internal/core/domain/equipment"
-	"github.com/cheezecakee/fitrkr/atlas/internal/core/ports"
+	"github.com/fitrkr/atlas/internal/core/domain/equipment"
+	"github.com/fitrkr/atlas/internal/core/ports"
 )
 
 type EquipmentAttachmentReader struct {

@@ -14,8 +14,8 @@
 package commands
 
 import (
-	"github.com/cheezecakee/fitrkr/atlas/internal/core/application/mediator"
-	"github.com/cheezecakee/fitrkr/atlas/internal/core/ports"
+	"github.com/fitrkr/atlas/internal/core/application/mediator"
+	"github.com/fitrkr/atlas/internal/core/ports"
 )
 
 var (

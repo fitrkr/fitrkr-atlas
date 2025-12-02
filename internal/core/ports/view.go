@@ -3,7 +3,7 @@ package ports
 import (
 	"context"
 
-	"github.com/cheezecakee/fitrkr/atlas/internal/core/domain/view"
+	"github.com/fitrkr/atlas/internal/core/domain/view"
 )
 
 type ViewWrite interface {

@@ -6,7 +6,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 
-	"github.com/cheezecakee/fitrkr/atlas/internal/api/web/v1/handlers"
+	"github.com/fitrkr/atlas/internal/api/web/v1/handlers"
 )
 
 func RegisterRoutes(registry *handlers.Registry) http.Handler {

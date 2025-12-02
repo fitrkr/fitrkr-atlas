@@ -6,8 +6,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/cheezecakee/fitrkr/atlas/internal/core/application/mediator"
-	"github.com/cheezecakee/fitrkr/atlas/pkg/web"
+	"github.com/fitrkr/atlas/internal/core/application/mediator"
+	"github.com/fitrkr/atlas/pkg/web"
 )
 
 type Registry struct {

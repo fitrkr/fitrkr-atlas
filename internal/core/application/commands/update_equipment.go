@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/cheezecakee/fitrkr/atlas/internal/core/domain/equipment"
+	"github.com/fitrkr/atlas/internal/core/domain/equipment"
 )
 
 type UpdateEquipmentCommand struct {

@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/cheezecakee/fitrkr/atlas/internal/core/domain/equipment"
+	"github.com/fitrkr/atlas/internal/core/domain/equipment"
 )
 
 type GetAttachmentByEquipmentIDQuery struct {

@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/cheezecakee/fitrkr/atlas/internal/core/ports"
+	"github.com/fitrkr/atlas/internal/core/ports"
 )
 
 type DeleteAttachmentCommand struct {
