@@ -2,7 +2,7 @@
 package db
 
 import (
-	"github.com/cheezecakee/fitrkr-atlas/internal/core/ports"
+	"github.com/cheezecakee/fitrkr/atlas/internal/core/ports"
 )
 
 type PortsProvider interface {

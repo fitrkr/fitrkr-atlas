@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/cheezecakee/fitrkr-atlas/internal/core/domain/category"
+	"github.com/cheezecakee/fitrkr/atlas/internal/core/domain/category"
 )
 
 type GetCategoryByIDQuery struct {

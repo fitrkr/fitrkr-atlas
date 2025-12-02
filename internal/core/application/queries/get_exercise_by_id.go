@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/cheezecakee/fitrkr-atlas/internal/core/domain/exercise"
+	"github.com/cheezecakee/fitrkr/atlas/internal/core/domain/exercise"
 )
 
 type GetExerciseByIDQuery struct {

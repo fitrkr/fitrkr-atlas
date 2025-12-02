@@ -7,9 +7,9 @@ import (
 
 	"github.com/go-chi/chi/v5"
 
-	v1 "github.com/cheezecakee/fitrkr-atlas/internal/api/web/v1"
-	"github.com/cheezecakee/fitrkr-atlas/internal/api/web/v1/handlers"
-	"github.com/cheezecakee/fitrkr-atlas/internal/core/application/mediator"
+	v1 "github.com/cheezecakee/fitrkr/atlas/internal/api/web/v1"
+	"github.com/cheezecakee/fitrkr/atlas/internal/api/web/v1/handlers"
+	"github.com/cheezecakee/fitrkr/atlas/internal/core/application/mediator"
 )
 
 type App struct {

@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/cheezecakee/fitrkr-atlas/internal/core/domain/muscle"
+	"github.com/cheezecakee/fitrkr/atlas/internal/core/domain/muscle"
 )
 
 type GetMuscleByIDQuery struct {

@@ -3,7 +3,7 @@ package postgres
 import (
 	"database/sql"
 
-	"github.com/cheezecakee/fitrkr-atlas/internal/core/ports"
+	"github.com/cheezecakee/fitrkr/atlas/internal/core/ports"
 )
 
 type PostgresPortsProvider struct {

@@ -7,8 +7,8 @@ import (
 	"github.com/cheezecakee/logr"
 	"github.com/lib/pq"
 
-	"github.com/cheezecakee/fitrkr-atlas/internal/core/domain/exercise"
-	"github.com/cheezecakee/fitrkr-atlas/internal/core/ports"
+	"github.com/cheezecakee/fitrkr/atlas/internal/core/domain/exercise"
+	"github.com/cheezecakee/fitrkr/atlas/internal/core/ports"
 )
 
 type ExerciseMuscleWriter struct {

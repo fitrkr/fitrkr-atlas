@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/cheezecakee/fitrkr-atlas/internal/core/domain/category"
+	"github.com/cheezecakee/fitrkr/atlas/internal/core/domain/category"
 )
 
 type UpdateCategoryCommand struct {

@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 
-	"github.com/cheezecakee/fitrkr-atlas/internal/core/domain/muscle"
+	"github.com/cheezecakee/fitrkr/atlas/internal/core/domain/muscle"
 )
 
 var (

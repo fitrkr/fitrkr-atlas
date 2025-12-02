@@ -6,8 +6,8 @@ import (
 
 	"github.com/cheezecakee/logr"
 
-	"github.com/cheezecakee/fitrkr-atlas/internal/core/domain/equipment"
-	"github.com/cheezecakee/fitrkr-atlas/internal/core/ports"
+	"github.com/cheezecakee/fitrkr/atlas/internal/core/domain/equipment"
+	"github.com/cheezecakee/fitrkr/atlas/internal/core/ports"
 )
 
 type EquipmentAttachmentWriter struct {

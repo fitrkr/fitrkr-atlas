@@ -5,11 +5,11 @@ import (
 	"github.com/cheezecakee/logr"
 	"github.com/joho/godotenv"
 
-	"github.com/cheezecakee/fitrkr-atlas/internal/api/web"
-	"github.com/cheezecakee/fitrkr-atlas/internal/core/application/commands"
-	"github.com/cheezecakee/fitrkr-atlas/internal/core/application/mediator"
-	"github.com/cheezecakee/fitrkr-atlas/internal/core/application/queries"
-	"github.com/cheezecakee/fitrkr-atlas/internal/infrastructure/db/postgres"
+	"github.com/cheezecakee/fitrkr/atlas/internal/api/web"
+	"github.com/cheezecakee/fitrkr/atlas/internal/core/application/commands"
+	"github.com/cheezecakee/fitrkr/atlas/internal/core/application/mediator"
+	"github.com/cheezecakee/fitrkr/atlas/internal/core/application/queries"
+	"github.com/cheezecakee/fitrkr/atlas/internal/infrastructure/db/postgres"
 )
 
 func main() {

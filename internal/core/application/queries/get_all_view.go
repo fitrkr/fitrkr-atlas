@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/cheezecakee/fitrkr-atlas/internal/core/domain/view"
+	"github.com/cheezecakee/fitrkr/atlas/internal/core/domain/view"
 )
 
 type GetAllViewQuery struct {

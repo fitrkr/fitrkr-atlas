@@ -1,4 +1,4 @@
-module github.com/cheezecakee/fitrkr-atlas
+module github.com/cheezecakee/fitrkr/atlas
 
 go 1.24.6
 

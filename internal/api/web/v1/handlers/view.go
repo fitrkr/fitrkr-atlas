@@ -6,8 +6,8 @@ import (
 
 	"github.com/go-chi/chi/v5"
 
-	"github.com/cheezecakee/fitrkr-atlas/internal/core/application/queries"
-	"github.com/cheezecakee/fitrkr-atlas/pkg/web"
+	"github.com/cheezecakee/fitrkr/atlas/internal/core/application/queries"
+	"github.com/cheezecakee/fitrkr/atlas/pkg/web"
 )
 
 func (h *Registry) GetViewByID(w http.ResponseWriter, r *http.Request) {

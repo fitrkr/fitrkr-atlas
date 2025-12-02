@@ -7,8 +7,8 @@ import (
 
 	"github.com/lib/pq"
 
-	"github.com/cheezecakee/fitrkr-atlas/internal/core/domain/view"
-	"github.com/cheezecakee/fitrkr-atlas/internal/core/ports"
+	"github.com/cheezecakee/fitrkr/atlas/internal/core/domain/view"
+	"github.com/cheezecakee/fitrkr/atlas/internal/core/ports"
 )
 
 type ViewReader struct {
