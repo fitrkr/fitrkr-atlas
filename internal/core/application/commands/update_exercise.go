@@ -52,16 +52,15 @@ func (cmd *UpdateExerciseCommand) Handle(ctx context.Context) (any, error) {
 		return nil, ports.ErrExerciseNotFound
 	}
 
-	var name string
-
 	if cmd.Name != "" {
-		name = strings.ToLower(strings.TrimSpace(cmd.Name))
-		exists.Name = name
-	}
+		cmd.Name = strings.ToLower(strings.TrimSpace(cmd.Name))
 
-	// Check if alias exists with the same name
-	if _, err := read.Exercise.Alias.GetByName(ctx, name); err == nil {
-		return nil, ports.ErrDuplicateExercise
+		// Check if an alias exists with the same name
+		if _, err := read.Exercise.Alias.GetByName(ctx, cmd.Name); err == nil {
+			return nil, fmt.Errorf("alias already exists")
+		}
+
+		exists.Name = cmd.Name
 	}
 
 	if cmd.Description != "" {
@@ -80,23 +79,27 @@ func (cmd *UpdateExerciseCommand) Handle(ctx context.Context) (any, error) {
 	if cmd.Position != "" {
 		position, err := exercise.NewBodyPosition(cmd.Position)
 		if err != nil {
-			return CreateExerciseResp{}, exercise.ErrInvalidPosition
+			return UpdateExerciseResp{}, exercise.ErrInvalidPosition
 		}
 		exists.Position = position.ToString()
 	}
 
 	// Validate equipment if provided
-	if cmd.EquipmentID != nil {
-		equipment, err := read.Equipment.GetByID(ctx, *cmd.EquipmentID)
-		if err != nil {
-			return CreateExerciseResp{}, fmt.Errorf("failed to read equipment %d: %w", *cmd.EquipmentID, err)
+	if cmd.EquipmentID != exists.EquipmentID {
+		// if it's not nil just verify it exists
+		if cmd.EquipmentID != nil {
+			_, err := read.Equipment.GetByID(ctx, *cmd.EquipmentID)
+			if err != nil {
+				return UpdateExerciseResp{}, fmt.Errorf("failed to read equipment %d: %w", *cmd.EquipmentID, err)
+			}
 		}
-		exists.EquipmentID = equipment.ID
+		// if the EquipmentID is nil still assign it
+		exists.EquipmentID = cmd.EquipmentID
 	}
 
 	exists.Touch()
 
-	_, err = write.Exercise.Update(ctx, *exists)
+	ex, err := write.Exercise.Update(ctx, *exists)
 	if err != nil {
 		return nil, fmt.Errorf("failed to update exercise: %w", err)
 	}
@@ -105,7 +108,7 @@ func (cmd *UpdateExerciseCommand) Handle(ctx context.Context) (any, error) {
 		return UpdateExerciseResp{}, fmt.Errorf("failed to update exercise relations: %w", err)
 	}
 
-	return UpdateExerciseResp{}, nil
+	return UpdateExerciseResp{Exercise: ex}, nil
 }
 
 func (cmd *UpdateExerciseCommand) build(ctx context.Context) error {

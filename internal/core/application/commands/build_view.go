@@ -9,7 +9,8 @@ import (
 )
 
 type BuildViewCommand struct {
-	ExerciseID int `json:"exercise_id"`
+	ExerciseID int  `json:"exercise_id"`
+	Create     bool `json:"create"`
 }
 
 type BuildViewResp struct{}
@@ -47,6 +48,14 @@ func (cmd *BuildViewCommand) Handle(ctx context.Context) (any, error) {
 		WithAliases(aliases).
 		Build()
 
+	if !cmd.Create {
+		err = write.View.Update(ctx, *v)
+		if err != nil {
+			return BuildViewResp{}, fmt.Errorf("failed update exercise view: %w", err)
+		}
+
+		return BuildViewResp{}, nil
+	}
 	_, err = write.View.Add(ctx, *v)
 	if err != nil {
 		return BuildViewResp{}, fmt.Errorf("failed insert exercise view: %w", err)

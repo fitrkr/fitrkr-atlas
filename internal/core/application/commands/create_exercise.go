@@ -36,6 +36,10 @@ type CreateExerciseResp struct {
 
 func (cmd *CreateExerciseCommand) Handle(ctx context.Context) (any, error) {
 	// Check if exercise already exists
+	if cmd.Name == "" {
+		return nil, fmt.Errorf("name cannot be empty")
+	}
+
 	name := strings.TrimSpace(strings.ToLower(cmd.Name))
 	if _, err := read.Exercise.GetByName(ctx, name); err == nil {
 		return nil, ports.ErrDuplicateExercise

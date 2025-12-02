@@ -94,6 +94,10 @@ func (r *AliasRelation) Add(ctx context.Context, exerciseID int) error {
 
 	var aliases []exercise.Alias
 	for _, i := range r.ToAdd {
+		// Check if an alias exists with the same name
+		if _, err := read.Exercise.Alias.GetByName(ctx, i.Name); err == nil {
+			return fmt.Errorf("alias already exists")
+		}
 		alias, err := exercise.NewAlias(exerciseID, i.Name, i.LanguageCode)
 		if err != nil {
 			return fmt.Errorf("failed to create exercise alias: %w", err)

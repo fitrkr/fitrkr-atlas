@@ -19,7 +19,7 @@ func (cmd *CreateEquipmentAttachmentCommand) Handle(ctx context.Context) (any, e
 	if err != nil {
 		return CreateEquipmentAttachmentResp{}, fmt.Errorf("failed to read attachment: %w", err)
 	}
-	_, err = read.Exercise.GetByID(ctx, cmd.EquipmentID)
+	_, err = read.Equipment.GetByID(ctx, cmd.EquipmentID)
 	if err != nil {
 		return CreateEquipmentAttachmentResp{}, fmt.Errorf("failed to read equipment: %w", err)
 	}
