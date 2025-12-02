@@ -838,9 +838,6 @@ paths:
                   type: string
                   example: "supine"
                   enum: [standing, sitting, supine, prone, kneeling]
-                type:
-                  type: string
-                  example: "strength"
                 equipment_id:
                   type: integer
                   nullable: true
@@ -931,10 +928,6 @@ paths:
                   nullable: true
                   example: "supine"
                   enum: [standing, sitting, supine, prone, kneeling]
-                type:
-                  type: string
-                  nullable: true
-                  example: "strength"
                 equipment_id:
                   type: integer
                   nullable: true
