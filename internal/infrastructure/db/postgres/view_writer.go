@@ -88,12 +88,11 @@ const UpdateView = `
 		position = $5,
 		alias = $6,
 		equipment = $7,
-		attachment = $8,
-		muscle = $9,
-		category = $10,
-		updated_at = $11,
-		deleted_at = $12,
-		purge_at = $13
+		muscle = $8,
+		category = $9,
+		updated_at = $10,
+		deleted_at = $11,
+		purge_at = $12
 	WHERE id = $1 AND deleted_at IS NULL
 `
 
