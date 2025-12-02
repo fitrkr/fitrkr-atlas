@@ -26,7 +26,7 @@ func NewCategoryType(categoryType string) (CategoryType, error) {
 func (c CategoryType) ToString() string {
 	switch c {
 	case CARDIO:
-		return "beginner"
+		return "cardio"
 	case FLEXIBILITY:
 		return "strength"
 	case STRENGTH:
